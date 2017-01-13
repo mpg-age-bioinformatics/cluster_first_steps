@@ -45,7 +45,7 @@ scontrol show job <job id>
 srun --pty bash
 
 # submit a job
-sbatch -p <partition>  --cpus-per-task=<n cpus> --mem=<n>gb -t <hours>:<minutes>:<seconds> -o <stdout file> <script>  
+sbatch -p <partition> --cpus-per-task=<n cpus> --mem=<n>gb -t <hours>:<minutes>:<seconds> -o <stdout file> <script>  
 
 # submit a job3 after job1 and job2 are successfully ready
 job1=$(sbatch <script1> 2>&1 | awk '{print $(4)}')
