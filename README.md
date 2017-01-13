@@ -45,7 +45,7 @@ scontrol show job <job id>
 srun --pty bash
 
 # submit a job
-sbatch -p  --cpus-per-task=<n cpus> --mem=<n>gb -t <hours>:<minutes>:<seconds> -o <stdout file> <script>  
+sbatch -p <partition>  --cpus-per-task=<n cpus> --mem=<n>gb -t <hours>:<minutes>:<seconds> -o <stdout file> <script>  
 
 # submit a job3 after job1 and job2 are successfully ready
 job1=$(sbatch <script1> 2>&1 | awk '{print $(4)}')
@@ -58,6 +58,8 @@ scancel <job id>
 # cancel all jobs for user
 scancel -u <user name>
 ```
+
+Submissions wihtout arguments specifications will result in `-p blade --cpus-per-task=2` and a time limit of 2 weeks.
 
 For large job submissions please use the **blade** partition. For large jobs submission over large periods (eg. more than a week) please use the **long** partition. 
 
