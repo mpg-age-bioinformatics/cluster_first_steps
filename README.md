@@ -25,7 +25,7 @@ source .bash_profile
 
 #### Data
 
-Data stored on the cluster is not backed up. You are responsilby for the backup of you data into a different file system.
+Data stored on the cluster is not backed up. You are responsilby for the backup of your data into a different file system.
 
 eg. transfer file from the server
 
