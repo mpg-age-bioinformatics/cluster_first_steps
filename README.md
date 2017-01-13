@@ -81,10 +81,10 @@ module whatis SAMtools
 # show environment changes for SAMtools
 module show SAMtools
 
-# loads SAMtools
+# load SAMtools
 module load SAMtools		
 
-# lists all loaded modules
+# list all loaded modules
 module list	  
 
 # unload the SAMtools module
