@@ -23,6 +23,31 @@ wget https://raw.githubusercontent.com/mpg-age-bioinformatics/cluster_first_step
 source .bash_profile
 ```
 
+#### Data
+
+Data stored on the cluster is not backed up. You are responsilby for the backup of you data into a different file system.
+
+eg. transfer file from the server
+
+```bash
+# on the server side
+scp </path/to/file> UName@<IP_ADDRESS>:~/Desktop
+```
+
+or 
+
+```bash
+# on your client side
+scp UName@cluster:</path/to/file> ~/Desktop
+```
+
+transfer data to the server
+
+```bash
+# on the client side
+scp </path/to/file> UName@cluster:~/
+```
+
 ## SLURM, Simple Linux Utility for Resource Management 
 
 ```bash
