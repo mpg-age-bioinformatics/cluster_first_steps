@@ -23,7 +23,7 @@ wget https://raw.githubusercontent.com/mpg-age-bioinformatics/cluster_first_step
 source .bash_profile
 ```
 
-## SLURM
+## SLURM, Simple Linux Utility for Resource Management 
 
 ```bash
 # show the partitions 
@@ -62,3 +62,32 @@ scancel -u <user name>
 For large job submissions please use the **blade** partition. For large jobs submission over large periods (eg. more than a week) please use the **long** partition. 
 
 Feel free to use the **himem** and **hugemem** partitions for large job submissions as well provided you can easely make these two partitions free on request of other users (eg. if you are submiting short jobs this should be easely achievable by using *sview* to modify the target partitions of your jobs).
+
+## Environment Modules Project
+
+A centralized software system.
+The modules system loads software (version of choice) and changes environment 
+variables (eg. LD_LIBRARY_PATH).
+
+```bash
+# show available modules
+module avail			
+
+# show a description of the SAMtools module
+module whatis SAMtools	
+
+# show environment changes for SAMtools
+module show SAMtools
+
+# loads SAMtools
+module load SAMtools		
+
+# lists all loaded modules
+module list	  
+
+# unload the SAMtools module
+module unload SAMtools	
+
+# unload all loaded modules
+module purge  			
+```
