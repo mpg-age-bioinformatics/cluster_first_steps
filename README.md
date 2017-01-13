@@ -63,7 +63,7 @@ Submissions wihtout arguments specifications will result in `-p blade --cpus-per
 
 For large job submissions please use the **blade** partition. For large jobs submission over large periods (eg. more than a week) please use the **long** partition. 
 
-Feel free to use the **himem** and **hugemem** partitions for large job submissions as well provided you can easely make these two partitions free on request of other users (eg. if you are submiting short jobs this should be easely achievable by using `sview` to modify the target partitions of your jobs).
+Feel free to use all partitions (ie. also the **himem** and **hugemem** partitions) for large job submissions as well provided you can easely make these two partitions free on request of other users (eg. if you are submiting short jobs this should be easely achievable by using `sview` to modify the target partitions of your jobs).
 
 ## Environment Modules Project
 
