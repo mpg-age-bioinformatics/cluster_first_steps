@@ -6,6 +6,8 @@
 
 [Modules](#environment-modules-project)
 
+[Databases and reference genomes](#databases-and-reference-genomes)
+
 [Data](#data)
 
 ## General
@@ -106,6 +108,68 @@ module unload SAMtools
 module purge  			
 ```
 
+## Databases and reference genomes
+
+We mantain a variety of databases and indexed genomes. Please contact us if you would require any database to be updated, genome reference added, or additional support on this.
+
+```bash
+cluster:/beegfs/common/databases$ tree -L 1
+.
+├── BLAST
+├── DATABASE_VERSION_LIST
+├── GOMo
+├── hmdb
+├── miR_targets
+├── Motif
+├── MSigDB
+├── new
+├── Pfam
+├── README
+├── SequencingAdapters
+├── SwissProt
+└── UniRef90
+```
+```bash
+cluster:/beegfs/common/genomes$ tree -L 2
+.
+├── adapters
+│   ├── All.fasta
+│   └── TruSeqAdapters.txt
+├── caenorhabditis_elegans
+│   ├── 83
+│   ├── 85
+│   ├── WBcel235_79
+│   ├── WBcel235_80
+│   └── WBcel235_81
+├── drosophila_melanogaster
+│   ├── 83
+│   ├── BDGP6_80
+│   └── BDGP6_81
+├── homo_sapiens
+│   ├── 83
+│   ├── GRCh38_80
+│   └── GRCh38_81
+├── mus_musculus
+│   ├── 83
+│   ├── GRCm37_mm9
+│   ├── GRCm38_79
+│   ├── GRCm38_80
+│   └── GRCm38_81
+└── saccharomyces_cerevisiae
+    ├── 82
+    └── 83
+```
+
+```bash
+cluster:..mmon/genomes/homo_sapiens/83$ ls
+alt_bowtie2      alt_tophat2_cuffcompare      original.abinitio.gtf              original.toplevel.fa      primary_assembly_star_2.4.1d          toplevel_bwa
+alt_bwa          BUILD_GRCh38_RELEASE_83      original.alt.fa                    original.toplevel.fa.fai  primary_assembly_tophat2              toplevel_hisat
+alt_hisat        chromosomes                  original.chr.gtf                   primary_assembly_bowtie2  primary_assembly_tophat2_cuffcompare  toplevel_hisat2
+alt_hisat2       cuffcompare.gtf              original.chr_patch_hapl_scaff.gtf  primary_assembly_bwa      README_fa                             toplevel_star_2.4.1d
+alt_star_2.4.1d  cuffcompare.results.tar.bz2  original.gtf                       primary_assembly_hisat    README_gtf                            toplevel_tophat2
+alt_tophat2      log                          original.primary_assembly.fa       primary_assembly_hisat2   toplevel_bowtie2                      toplevel_tophat2_cuffcompare
+```
+   
 ## Data
 
 Data stored on the cluster is not backed up. You are responsible for the backup of your data into a different file system.
