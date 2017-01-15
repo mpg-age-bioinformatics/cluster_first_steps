@@ -128,7 +128,7 @@ transfer data to the server
 scp </path/to/file> UName@cluster:~/
 ```
 
-#### Filezilla Installation instructions for Ubuntu
+#### Filezilla installation instructions for Ubuntu
 
 First install filezilla with the following command:
 
