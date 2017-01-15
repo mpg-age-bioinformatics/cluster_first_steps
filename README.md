@@ -1,3 +1,5 @@
+## Table of Contents
+
 [General](#general)
 
 [SLURM](#slurm-simple-linux-utility-for-resource-management)
@@ -5,8 +7,6 @@
 [Modules](#environment-modules-project)
 
 [Data](#data)
-
-======
 
 ## General
 
