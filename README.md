@@ -94,9 +94,18 @@ module unload SAMtools
 module purge  			
 ```
 
-#### Data
+## Data
 
-Data stored on the cluster is not backed up. You are responsilby for the backup of your data into a different file system.
+Data stored on the cluster is not backed up. You are responsible for the backup of your data into a different file system.
+
+#### Short Explanation
+
+You can use many clients to copy your files to the cluster-filesystem beegfs.
+The clients needs to be able to use scp. scp means secure copy. That mean that your files are crypted during the copy process.
+We would recommend using filezilla.
+This Gui is available most known Operating systems, like Windows, Linux or OS-X (if you have a MAC).
+
+#### Using scp
 
 eg. transfer file from the server
 
@@ -117,4 +126,67 @@ transfer data to the server
 ```bash
 # on the client side
 scp </path/to/file> UName@cluster:~/
+```
+
+#### Filezilla Installation instructions for Ubuntu
+
+First install filezilla with the following command:
+
+```bash
+sudo apt-get install filezilla
+```
+
+Now you have installed the program filezilla.
+All you have to do is to create an icon for it:
+
+right click on the desktop and use: Create Launcher
+
+You should name it filezilla
+
+Add **filezilla** into the command window of your Create Launcher window
+and **mark it executable**.
+
+After that you should be able to use filezilla.
+
+#### Filezilla installation instructions for OSX
+
+On MacOSX you can download attachment:FileZilla\_3.13.1\_macosx-x86.app.tar.bz2
+Go to the **Downloads** folder in the **Finder** app.
+Double click the file to extract the archive.
+Copy (drag and drop) the extracted file **Filezilla** or **Filezilla.app** to your **Applications** folder.
+Double click the icon to start it, or drag it to the Dock.
+
+#### Filezilla installation instructions for Windows
+
+On Windows installers there might be already activated checkboxes for some other software, like the yahoo toolbar.
+You should uncheck them.
+
+#### Using FIlezilla and explaining beegfs
+
+beegfs is a cluster filesystem. This filesystem is designed for speed and parallel access. It is not designed as a save filesystem. So if you want to save your results,
+you have to move your results to another location.
+
+If you want to connect the cluster with filezilla, then you have to open filezilla.
+In filezilla you have to open the site Manager and you have to make an entry like this one:
+
+![site_manager](https://github.com/mpg-age-bioinformatics/cluster_first_steps/blob/master/img/Site_manager.png)
+
+Your settings should be the same, but with a different name. You should save the entry.
+
+Then you only have to press the connect button and you have to enter your password. This password will be only saved for the session for security reasons.
+Your window will look like this one. There you can drag and drop the files or folders you want to copy.
+
+![copy_data](https://github.com/mpg-age-bioinformatics/cluster_first_steps/blob/master/img/Copy_window.png)
+
+#### Using sshfs
+
+install osxfuse and sshfs
+osx: http://osxfuse.github.io
+linux: `sudo apt-get install sshfs`
+
+run:
+
+```bash
+mkdir ~/beegfs
+sshfs JDoe@cluster:/beegfs/group_XX ~/beegfs
 ```
