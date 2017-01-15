@@ -13,6 +13,8 @@
 If you would like to get access to the local cluster at the MPI-AGE
 please mail bioinformatics@age.mpg.de.
 
+An introduction to HPC and SLURM can be found [here](HPC_20170113.pdf).
+
 Once you have been given access you can login to one of the 2 head nodes with:
 
 ```bash
