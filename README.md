@@ -180,13 +180,13 @@ Your window will look like this one. There you can drag and drop the files or fo
 
 #### Using sshfs
 
-install osxfuse and sshfs
+install osxfuse and sshfs on your client (eg. laptop)
 osx: http://osxfuse.github.io
 linux: `sudo apt-get install sshfs`
 
-run:
+on your client, run:
 
 ```bash
-mkdir ~/beegfs
-sshfs JDoe@cluster:/beegfs/group_XX ~/beegfs
+mkdir ~/cluster_mount
+sshfs JDoe@cluster:/beegfs/group_XX ~/cluster_mount
 ```
