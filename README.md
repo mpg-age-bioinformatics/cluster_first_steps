@@ -6,13 +6,13 @@ please mail bioinformatics@age.mpg.de.
 Once you have been given access you can login to one of the 2 head nodes with:
 
 ```bash
-ssh -XY UName@cluster.age.mpg.de
+ssh -XY UName@cluster
 ```
 
 or
 
 ```bash
-ssh -XY UName@cluster2.age.mpg.de
+ssh -XY UName@cluster2
 ```
 
 The first time you login you should download the following `.bash_profile` and source it:
@@ -21,31 +21,6 @@ The first time you login you should download the following `.bash_profile` and s
 cd ~
 wget https://raw.githubusercontent.com/mpg-age-bioinformatics/cluster_first_steps/master/.bash_profile
 source .bash_profile
-```
-
-#### Data
-
-Data stored on the cluster is not backed up. You are responsilby for the backup of your data into a different file system.
-
-eg. transfer file from the server
-
-```bash
-# on the server side
-scp </path/to/file> UName@<IP_ADDRESS>:~/Desktop
-```
-
-or 
-
-```bash
-# on your client side
-scp UName@cluster:</path/to/file> ~/Desktop
-```
-
-transfer data to the server
-
-```bash
-# on the client side
-scp </path/to/file> UName@cluster:~/
 ```
 
 ## SLURM, Simple Linux Utility for Resource Management 
@@ -117,4 +92,29 @@ module unload SAMtools
 
 # unload all loaded modules
 module purge  			
+```
+
+#### Data
+
+Data stored on the cluster is not backed up. You are responsilby for the backup of your data into a different file system.
+
+eg. transfer file from the server
+
+```bash
+# on the server side
+scp </path/to/file> UName@<IP_ADDRESS>:~/Desktop
+```
+
+or 
+
+```bash
+# on your client side
+scp UName@cluster:</path/to/file> ~/Desktop
+```
+
+transfer data to the server
+
+```bash
+# on the client side
+scp </path/to/file> UName@cluster:~/
 ```
