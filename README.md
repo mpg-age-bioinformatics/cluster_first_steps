@@ -20,13 +20,13 @@ An introduction to HPC and SLURM can be found [here](HPC_20170113.pdf).
 Once you have been given access you can login to one of the 2 head nodes with:
 
 ```bash
-ssh -XY UName@cluster
+ssh -XY UName@amalia
 ```
 
 or
 
 ```bash
-ssh -XY UName@cluster2
+ssh -XY UName@amalia2
 ```
 
 The first time you login you should download the following `.bash_profile` and source it:
