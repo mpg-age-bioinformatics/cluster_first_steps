@@ -194,14 +194,14 @@ or
 
 ```bash
 # on your client side
-scp UName@cluster:</path/to/file> ~/Desktop
+scp UName@amalia:</path/to/file> ~/Desktop
 ```
 
 transfer data to the server
 
 ```bash
 # on the client side
-scp </path/to/file> UName@cluster:~/
+scp </path/to/file> UName@amalia:~/
 ```
 
 #### Filezilla installation instructions for Ubuntu
@@ -264,5 +264,5 @@ on your client, run:
 
 ```bash
 mkdir ~/cluster_mount
-sshfs JDoe@cluster:/beegfs/group_XX ~/cluster_mount
+sshfs JDoe@amalia:/beegfs/group_XX ~/cluster_mount
 ```
