@@ -243,10 +243,10 @@ beegfs is a cluster filesystem. This filesystem is designed for speed and parall
 you have to move your results to another location.
 
 If you want to connect the cluster with filezilla, then you have to open filezilla.
-In filezilla you have to open the site Manager and you have to make an entry like this one:
+In filezilla you have to open the site Manager and you have to make an entry like this one (for "Host" please use "amalia" instead of "cluster"):
 
 ![site_manager](https://github.com/mpg-age-bioinformatics/cluster_first_steps/blob/master/img/Site_manager.png)
-
+ 
 Your settings should be the same, but with a different name. You should save the entry.
 
 Then you only have to press the connect button and you have to enter your password. This password will be only saved for the session for security reasons.
