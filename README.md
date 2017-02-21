@@ -305,7 +305,7 @@ The *ruby* kernel makes use of the *module ruby/2.4.0*. Thus, if you want to bat
  
 **Running Jupyter over slurm** 
 
-You can also run `jupyter notebook` over *slurm*.
+You can also run `jupyter notebook` over *slurm*. If you decide to do this, only the *Python3* kernel will be available. You can install and registers additional kernels for your user if you wish. Contact us if you need help on this.
 
 Before the first usage make sure you download the correct config file:
 ```bash
@@ -321,3 +321,5 @@ This will default to port 8888. You can also choose an alternative port by for e
 ```bash
 srun jupyter notebook --config ~/jupyter_notebook_config.py --port 8989
 ```
+
+
