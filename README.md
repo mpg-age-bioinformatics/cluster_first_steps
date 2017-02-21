@@ -303,3 +303,16 @@ The *R* kernel makes use of the *module rlang/3.3.2*. Thus, if you want to batch
 
 The *ruby* kernel makes use of the *module ruby/2.4.0*. Thus, if you want to batch *ruby* code that you developed on the *JupyterHub* you should make use of the `module load ruby/2.4.0`.
  
+**Running Jupyter over slurm** 
+
+You can also run `jupyter notebook` over *slurm*.
+```bash
+cd ~
+wget https://raw.githubusercontent.com/mpg-age-bioinformatics/cluster_first_steps/master/jupyter_notebook_config.py
+module load jupyterhub
+srun jupyter notebook --config ~/jupyter_notebook_config.py
+```
+This will default to port 8888. You can also choose an alternative port by for example: 
+```bash
+srun jupyter notebook --config ~/jupyter_notebook_config.py --port 8989
+```
