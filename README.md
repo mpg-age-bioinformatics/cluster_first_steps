@@ -279,7 +279,7 @@ An RStudio-server connected to the HPC shared file system is available on [https
 
 A JupyterHub connected to the HPC shared file system is available on [https://jupyterhub.age.mpg.de](https://jupyterhub.age.mpg.de).
 
-*Kernels* : Python/2.7.12 Python/3.6.0 R/3.3.2 ruby/2.4.0 
+*Kernels* : Python/2.7.12; Python/3.6.0; R/3.3.2; ruby/2.4.0 
 
 Users can add environment variables to the JupyterHub by making use of their local `.jupyter` config. Eg. Adding `bedtools` to your JupyterHub path:
 ```bash
