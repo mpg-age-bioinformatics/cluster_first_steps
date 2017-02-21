@@ -10,6 +10,10 @@
 
 [Data](#data)
 
+[RStudio-server](#rstudio-server)
+
+[JupyterHub](#jupyterhub)
+
 ## General
 
 If you would like to get access to the local cluster at the MPI-AGE
@@ -265,4 +269,23 @@ on your client, run:
 ```bash
 mkdir ~/cluster_mount
 sshfs JDoe@amalia:/beegfs/group_XX ~/cluster_mount
+```
+
+## RStudio-server
+
+An RStudio-server connected to the HPC shared file system is available on [https://rstudio.age.mpg.de](https://rstudio.age.mpg.de).
+
+## JupyterHub
+
+A JupyterHub connected to the HPC shared file system is available on [https://jupyterhub.age.mpg.de](https://jupyterhub.age.mpg.de).
+
+Users can add environment variables to the JupyterHub by making use of their local `.jupyter` config. Eg. Adding `bedtools` to your JupyterHub path:
+```bash
+mkdir -p ~/.jupyter
+vim ~/.jupyter/jupyter_notebook_config.py
+```
+Contents of the `jupyter_notebook_config.py`:
+```python
+import os
+os.environ["PATH"]="/beegfs/common/software/2017/modules/software/bedtools/2.26.0/bin:"+os.environ["PATH"]
 ```
