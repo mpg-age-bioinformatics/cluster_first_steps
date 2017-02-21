@@ -7,7 +7,7 @@ import os
 import errno
 import stat
 
-print(os.environ["HOSTNAME"])
+print("This is your hostname: %s" %str(os.environ["HOSTNAME"]) )
 c = get_config()
 c.NotebookApp.ip = '*'
 c.NotebookApp.port = 8888
