@@ -279,6 +279,8 @@ An RStudio-server connected to the HPC shared file system is available on [https
 
 A JupyterHub connected to the HPC shared file system is available on [https://jupyterhub.age.mpg.de](https://jupyterhub.age.mpg.de).
 
+*Kernels* : Python/2.7.12 Python/3.6.0 R/3.3.2 ruby/2.4.0 
+
 Users can add environment variables to the JupyterHub by making use of their local `.jupyter` config. Eg. Adding `bedtools` to your JupyterHub path:
 ```bash
 mkdir -p ~/.jupyter
@@ -289,3 +291,15 @@ Contents of the `jupyter_notebook_config.py`:
 import os
 os.environ["PATH"]="/beegfs/common/software/2017/modules/software/bedtools/2.26.0/bin:"+os.environ["PATH"]
 ```
+
+The JupyterHub environment can be loaded on the normal `ssh` connection by 
+```bash
+module load jupyterhub
+```
+
+As complete module, jupyterhub has is own *Python2* and *Python3* environment. Thus, if you want to batch *Python* code that you developed on the *JupyterHub* you should make use of the `module load jupyterhub`.
+
+The *R* kernel makes use of the *module rlang/3.3.2*. Thus, if you want to batch *R* code that you developed on the *JupyterHub* you should make use of the `module load rlang`.
+
+The *ruby* kernel makes use of the *module ruby/2.4.0*. Thus, if you want to batch *ruby* code that you developed on the *JupyterHub* you should make use of the `module load ruby/2.4.0`.
+ 
