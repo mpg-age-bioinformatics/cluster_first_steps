@@ -6,8 +6,16 @@ import subprocess
 import os
 import errno
 import stat
+import sys
 
-print("This is your hostname: %s" %str(os.environ["HOSTNAME"]) )
+print("\n\n\n\n*****************\n\n\
+This is your hostname: %s\n\nYou must use this string instead of 'localhost'\n\n*****************\n\n\n\n" %str(os.environ["HOSTNAME"]) )
+sys.stdout.flush()
+
+c = get_config()
+c.NotebookApp.ip = '*'
+c.NotebookApp.port = 8888
+c.NotebookApp.open_browser = False
 c = get_config()
 c.NotebookApp.ip = '*'
 c.NotebookApp.port = 8888
