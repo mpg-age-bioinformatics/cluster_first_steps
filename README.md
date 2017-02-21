@@ -306,9 +306,14 @@ The *ruby* kernel makes use of the *module ruby/2.4.0*. Thus, if you want to bat
 **Running Jupyter over slurm** 
 
 You can also run `jupyter notebook` over *slurm*.
+
+Before the first usage make sure you download the correct config file:
 ```bash
 cd ~
 wget https://raw.githubusercontent.com/mpg-age-bioinformatics/cluster_first_steps/master/jupyter_notebook_config.py
+```
+Afterwards:
+```bash
 module load jupyterhub
 srun jupyter notebook --config ~/jupyter_notebook_config.py
 ```
