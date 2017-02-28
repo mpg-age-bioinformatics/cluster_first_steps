@@ -281,6 +281,8 @@ A JupyterHub connected to the HPC shared file system is available on [https://ju
 
 *Kernels* : Python/2.7.12; Python/3.6.0; R/3.3.2; ruby/2.4.0 
 
+To use it for the first time make sure the file `~/.jupyter/jupyter_notebook_config.py` has no content or does not exist.
+
 Users can add environment variables to the JupyterHub by making use of their local `.jupyter` config. Eg. Adding `bedtools` to your JupyterHub path:
 ```bash
 mkdir -p ~/.jupyter
