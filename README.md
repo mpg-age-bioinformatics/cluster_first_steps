@@ -66,9 +66,12 @@ srun --pty bash
 sbatch -p <partition> --cpus-per-task=<n cpus> --mem=<n>gb -t <hours>:<minutes>:<seconds> -o <stdout file> <script>  
 
 # submit a job3 after job1 and job2 are successfully ready
-job1=$(sbatch <script1> 2>&1 | awk '{print $(4)}')
-job2=$(sbatch <script2> 2>&1 | awk '{print $(4)}')
+job1=$(sbatch --parsable <script1>)
+job2=$(sbatch --parsable <script2>)
 sbatch -d afterok:${job1}:${job2} <script3>
+
+# attach to a running job and run a command
+srun --jodib <JOBID> --pty <command>
 
 # cancel a job
 scancel <job id>
