@@ -33,6 +33,9 @@ or
 ssh -XY UName@amaliax
 ```
 
+Please note that while `amalia` is a virtual machine (with 8 cores, 32 GB RAM, no infiniband connection, and no X forwarding)
+`amaliax` is a blade node (with 40 cores, 250 GB RAM, infiniband network, and X forwarding.
+
 The first time you login you should download the following `.bash_profile` and source it:
 
 ```bash
