@@ -59,6 +59,12 @@ squeue -u <user name>
 # show information on a job
 scontrol show job <job id>
 
+# show information on a partition
+scontrol show partition <parition name>
+
+# show information on a node
+scontrol show node <node name>
+
 # start and interactive bash session
 srun --pty bash
 
