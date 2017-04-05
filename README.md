@@ -30,7 +30,7 @@ ssh -XY UName@amalia
 or
 
 ```bash
-ssh -XY UName@amalia2
+ssh -XY UName@amaliax
 ```
 
 The first time you login you should download the following `.bash_profile` and source it:
