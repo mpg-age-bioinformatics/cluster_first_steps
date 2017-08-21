@@ -338,5 +338,5 @@ This will default to port 8888. You can also choose an alternative port by for e
 ```bash
 srun jupyter notebook --config ~/jupyter_notebook_config.py --port 8989
 ```
-
-
+**Using module from Jupyter Terminal**
+If you start a Terminal from Jupyterhub "˜/.bashrc" is processed and ˜/.profile not. So if you want to use modules from the terminal add the content of .bashrc in your .bashrc
