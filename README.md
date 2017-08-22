@@ -319,6 +319,10 @@ As complete module, jupyterhub has is own *Python2* and *Python3* environment. T
 The *R* kernel makes use of the *module rlang/3.3.2*. Thus, if you want to batch *R* code that you developed on the *JupyterHub* you should make use of the `module load rlang`.
 
 The *ruby* kernel makes use of the *module ruby/2.4.0*. Thus, if you want to batch *ruby* code that you developed on the *JupyterHub* you should make use of the `module load ruby/2.4.0`.
+
+**Using the Modules system from within JupyterHub**
+
+If you start a Terminal from Jupyterhub `˜/.bashrc` is processed and `˜/.profile` not. So if you want to use modules from the terminal add the content of [`.bashrc`](https://github.com/mpg-age-bioinformatics/cluster_first_steps/blob/master/.bashrc) in your `.bashrc`.
  
 **Running Jupyter over slurm** 
 
@@ -338,5 +342,4 @@ This will default to port 8888. You can also choose an alternative port by for e
 ```bash
 srun jupyter notebook --config ~/jupyter_notebook_config.py --port 8989
 ```
-**Using module from Jupyter Terminal**
-If you start a Terminal from Jupyterhub "˜/.bashrc" is processed and ˜/.profile not. So if you want to use modules from the terminal add the content of .bashrc in your .bashrc
+
