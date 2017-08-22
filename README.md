@@ -322,7 +322,7 @@ The *ruby* kernel makes use of the *module ruby/2.4.0*. Thus, if you want to bat
 
 **Using the Modules system from within JupyterHub**
 
-If you start a Terminal from Jupyterhub `~/.bashrc` is processed and `~/.profile` not. So if you want to use modules from the terminal add the content of [`.bashrc`](https://github.com/mpg-age-bioinformatics/cluster_first_steps/blob/master/.bashrc) in your `~/.bashrc`.
+If you start a Terminal from Jupyterhub `~/.bashrc` is processed and `~/.profile` not. So if you want to use modules from the terminal add the content of [`.bashrc`](https://github.com/mpg-age-bioinformatics/cluster_first_steps/blob/master/.bashrc) to your `~/.bashrc`.
  
 **Running Jupyter over slurm** 
 
