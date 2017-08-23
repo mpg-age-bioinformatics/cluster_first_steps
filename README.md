@@ -6,6 +6,8 @@
 
 [Modules](#environment-modules-project)
 
+[Shifter](#shifter)
+
 [Databases and reference genomes](#databases-and-reference-genomes)
 
 [Data](#data)
@@ -19,7 +21,7 @@
 If you would like to get access to the local cluster at the MPI-AGE
 please mail bioinformatics@age.mpg.de.
 
-An introduction to HPC and SLURM can be found [here](HPC_20170113.pdf).
+An introduction to HPC and SLURM can be found [here](http://github.com/mpg-age-bioinformatics/mpg-age-bioinformatics.github.io/blob/master/tutorials/RemoteServers.pdf).
 
 Once you have been given access you can login to one of the 2 head nodes with:
 
@@ -36,12 +38,12 @@ ssh -XY UName@amaliax
 Please note that while `amalia` is a virtual machine (with 8 cores, 32 GB RAM, no infiniband connection, and no X forwarding)
 `amaliax` is a blade node (with 40 cores, 250 GB RAM, infiniband network, and X forwarding).
 
-The first time you login you should download the following `.bash_profile` and source it:
+The first time you login you should download the following `.bashrc` and source it:
 
 ```bash
 cd ~
-wget https://raw.githubusercontent.com/mpg-age-bioinformatics/cluster_first_steps/master/.bash_profile
-source .bash_profile
+wget https://raw.githubusercontent.com/mpg-age-bioinformatics/cluster_first_steps/master/.bashrc
+source .bashrc
 ```
 
 ## SLURM, Simple Linux Utility for Resource Management 
@@ -126,6 +128,45 @@ module unload SAMtools
 # unload all loaded modules
 module purge  			
 ```
+
+## Shifter
+
+*! This sechtion is under development - please contact us if you wish to use Shifter !*
+
+Shifter enables container images for HPC. In a nutshell, Shifter allows an HPC system to efficiently and safely allow end-users to run a [docker](http://www.docker.com) image.
+
+**What is a Container?**
+Containers are a way to package software in a format that can run isolated on a shared operating system. Unlike VMs (Virtual Machines), containers do not bundle a full operating system - only libraries and settings required to make the software work are needed. This makes for efficient, lightweight, self-contained systems and guarantees that software will always run the same, regardless of where it’s deployed. (source: [docker.com](http://www.docker.com)).
+
+An introduction to docker and how to generate your own images can be found [here](http://github.com/mpg-age-bioinformatics/mpg-age-bioinformatics.github.io/blob/master/tutorials/reproducible_multilang_workflows_with_jupyter_on_docker ). More information on how to build docker images and best practices for writing Dockerfiles can be found [here](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/) and [here](https://docs.docker.com/engine/reference/builder/), respectively.
+
+```
+# load the required module
+module load shifter
+
+# Pull and image
+shifterimg pull docker/ubuntu:15.10
+
+# Get an interactive shell and check you are in the intended image
+shifter --image=ubuntu:15.10 bash -login
+cat /etc/lsb-release 
+```
+You expect to see the following output:
+```
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=15.10
+DISTRIB_CODENAME=wily
+DISTRIB_DESCRIPTION="Ubuntu 15.10"
+```
+You can also use it with SLURM. Consider the folowing script named `shifter.test.sh`:
+```
+#!/bin/bash
+#SBATCH -o shifter.out
+#SBATCH --image=docker:ubuntu:15.10
+
+shifter cat /etc/lsb-release
+```
+Now run it (ie. `sbatch shifter.test.sh`) and check the contents of `shifter.out`.
 
 ## Databases and reference genomes
 
