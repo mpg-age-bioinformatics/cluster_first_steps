@@ -168,6 +168,8 @@ shifter cat /etc/lsb-release
 ```
 Now run it (ie. `sbatch shifter.test.sh`) and check the contents of `shifter.out`.
 
+Please visit the [docker store](https://store.docker.com/community/images/mpgagebioinformatics/bioinformatics_software) if you wish to use the image containing all software currently in use `mpgagebioinformatics/bioinformatics_software`.
+
 ## Databases and reference genomes
 
 We mantain a variety of databases and indexed genomes. Please contact us if you would require any database to be updated, genome reference added, or additional support on this.
