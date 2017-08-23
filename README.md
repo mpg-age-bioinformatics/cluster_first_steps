@@ -100,6 +100,19 @@ For large job submissions please use the **blade** partition. For large jobs sub
 
 Feel free to use all partitions (ie. also the **himem** and **hugemem** partitions) for large job submissions as well provided you can easely make these two partitions free on request of other users (eg. if you are submiting short jobs this should be easely achievable by using `sview` to modify the target partitions of your jobs).
 
+When submitin jobs with `sbatch` you can also include SLURM parameters inside the script ie.:
+```
+#!/bin/bash
+#SBATCH -p <partition> 
+#SBATCH --cpus-per-task=<n cpus> 
+#SBATCH --mem=<n>gb 
+#SBATCH -t <hours>:<minutes>:<seconds> 
+#SBATCH -o <stdout file> 
+
+<code>
+```
+and then run the script with `sbatch <script>`.
+
 ## Environment Modules Project
 
 A centralized software system.
