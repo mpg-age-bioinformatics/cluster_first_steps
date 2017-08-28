@@ -92,6 +92,9 @@ scancel -u <user name>
 
 # change the partitions of a pending job
 scontrol update job <job id> partition=<partition1>,<partition2>,<partition3>
+
+# change the partition and reserved nodes where node list has the form bioinf-blc-[02,27-28]
+scontrol update job <job id> partition=<partition1>,<partition2>,<partition3> nodelist=<node list>
 ```
 
 Submissions wihtout arguments specifications will result in `-p blade --cpus-per-task=2` and a time limit of 2 weeks.
