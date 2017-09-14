@@ -144,6 +144,7 @@ module unload SAMtools
 # unload all loaded modules
 module purge  			
 ```
+Jupyterhub and R-Studio Server are using the R version 3.3.2 from the module environment. For this you have to `source /software/2017/age-bioinformatics.2017.only.rc` and `module load rlang`.
 
 ## Shifter
 
