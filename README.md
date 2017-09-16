@@ -185,7 +185,7 @@ shifter cat /etc/lsb-release
 ```
 Now run it (ie. `sbatch shifter.test.sh`) and check the contents of `shifter.out`.
 
-Please visit our software_docker [page]https://github.com/mpg-age-bioinformatics/software_docker#software-container) if you wish to use the image containing all software currently in use `mpgagebioinformatics/bioinformatics_software`.
+Please visit our software_docker [page](https://github.com/mpg-age-bioinformatics/software_docker#software-container) if you wish to use the image containing all software currently in use `mpgagebioinformatics/bioinformatics_software`.
 
 ## Databases and reference genomes
 
