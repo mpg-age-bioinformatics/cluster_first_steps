@@ -179,13 +179,19 @@ You can also use it with SLURM. Consider the folowing script named `shifter.test
 ```
 #!/bin/bash
 #SBATCH -o shifter.out
-#SBATCH --image=docker:ubuntu:15.10
 
-shifter cat /etc/lsb-release
+shifter --image=docker:ubuntu:15.10 cat /etc/lsb-release
 ```
 Now run it (ie. `sbatch shifter.test.sh`) and check the contents of `shifter.out`.
 
 Please visit our software_docker [page](https://github.com/mpg-age-bioinformatics/software_docker#software-container) if you wish to use the image containing all software currently in use `mpgagebioinformatics/bioinformatics_software`.
+
+Attention, you might need to:
+```bash
+unset PYTHONHOME PYTHONUSERBASE PYTHONPATH 
+module unload rlang
+```
+before running `shifter`.
 
 ## Databases and reference genomes
 
