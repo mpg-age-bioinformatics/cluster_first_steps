@@ -161,8 +161,14 @@ An introduction to docker and how to generate your own images can be found [here
 # load the required module
 module load shifter
 
-# Pull and image
+# Pull and image (administrators only)
 shifterimg pull docker/ubuntu:15.10
+
+# List available images (administrators only)
+shifterimg images
+
+# List available images (all)
+shifterls
 
 # Get an interactive shell and check you are in the intended image
 shifter --image=ubuntu:15.10 bash -login
