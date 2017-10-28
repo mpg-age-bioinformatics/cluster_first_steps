@@ -1,4 +1,3 @@
-echo "Reading ~/.bashrc ..."
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
@@ -26,5 +25,11 @@ fi
 
 source /beegfs/common/software/2017/age-bioinformatics.2017.only.rc
 module load slurm
+
+export PROMPT_COMMAND='DIR=`pwd|sed -e "s!$HOME!~!"`; if [ ${#DIR} -gt 30 ]; then CurDir=..${DIR:${#DIR}-28}; else CurDir=$DIR; fi'
+export PS1="\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\$CurDir\$\[\033[00m\] "
+
+if [[ -e /home/mpiage/.bashrc ]]; then module purge; unset PYTHONHOME PYTHONUSERBASE PYTHONPATH; export MODULEPATH=$MODF/bioinformatics:$MODF/general:$MODF/libs; source /home/mpiage/.bashrc; fi
+
 
 
