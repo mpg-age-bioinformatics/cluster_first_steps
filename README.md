@@ -45,7 +45,7 @@ cd ~
 wget https://raw.githubusercontent.com/mpg-age-bioinformatics/cluster_first_steps/master/.bashrc
 wget https://raw.githubusercontent.com/mpg-age-bioinformatics/cluster_first_steps/master/.bash_profile
 source .bashrc
-soruce .bash_profile
+source .bash_profile
 ```
 
 ## SLURM, Simple Linux Utility for Resource Management 
