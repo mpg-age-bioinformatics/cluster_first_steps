@@ -283,6 +283,7 @@ for f in $(ls *.fastq);
 shifter –image=mpgagebioinformatics/bioinformatics_software:v1.0.1 << SHI	
 #!/bin/bash
 source ~/.bashrc 
+module load bwa
 cd ~/project/raw_data			
 bwa mem –T 18 ${f}	
 SHI			
