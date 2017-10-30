@@ -38,12 +38,14 @@ ssh -XY UName@amaliax
 Please note that while `amalia` is a virtual machine (with 8 cores, 32 GB RAM, no infiniband connection, and no X forwarding)
 `amaliax` is a blade node (with 40 cores, 250 GB RAM, infiniband network, and X forwarding).
 
-The first time you login you should download the following `.bashrc` and source it:
+The first time you login you should download the following `.bashrc` and `.bash_profile` and source them:
 
 ```bash
 cd ~
 wget https://raw.githubusercontent.com/mpg-age-bioinformatics/cluster_first_steps/master/.bashrc
+wget https://raw.githubusercontent.com/mpg-age-bioinformatics/cluster_first_steps/master/.bash_profile
 source .bashrc
+soruce .bash_profile
 ```
 
 ## SLURM, Simple Linux Utility for Resource Management 
@@ -197,7 +199,103 @@ Attention, you might need to:
 unset PYTHONHOME PYTHONUSERBASE PYTHONPATH 
 module unload rlang
 ```
-before running `shifter`.
+before running `shifter`. This is automaticaly done when running the `mpgagebioinformatics/bioinformatics_software` if you use the `.bashrc` provided above.
+
+Running a script with shifter
+
+- example script: `test.sh` -
+```bash
+#!/bin/bash
+source ~/.bashrc
+
+module load rlang python
+
+which python
+
+python << EOF
+print "This is python"
+EOF
+
+which R
+
+Rscript -e "print('This is R')"
+```
+- running the script -
+```bash
+chmod +x test.shifter.sh
+shifter \
+    --image=mpgagebioinformatics/bioinformatics_software:v1.0.1 \   
+    ./test.sh
+```
+
+Running a scipt over shifter on slurm:
+
+- example script: `test.slurm.sh` - 
+```bash
+#!/bin/bash
+#SBATCH --cpus-per-task=18
+#SBATCH --mem=15gb
+#SBATCH --time=5-24 
+#SBATCH -p blade
+#SBATCH -o test.shifter.out
+
+shifter –-image=mpgagebioinformatics/bioinformatics_software:v1.0.1 << SHI
+#!/bin/bash
+
+source ~/.bashrc 
+
+module load rlang python
+
+which python
+
+python << EOF
+print "This is python"
+EOF
+
+which R
+
+Rscript -e "print('This is R')"
+
+SHI
+```
+- running the script over slurm -
+```bash
+chmod +x test.slurm.sh
+sbatch test.slurm.sh
+```
+- check the output - 
+```bash
+cat test.shifter.out
+```
+
+Example for automation over a batch of jobs:
+
+- example script: `automation.slurm.shifter.sh` - 
+```bash
+#!/bin/bash
+cd ~/project/raw_data			
+for f in $(ls *.fastq); 
+   do  rm ~/project/slurm_logs/${f}.*.out
+
+   sbatch --cpus-per-task=18 --mem=15gb --time=5-24 \
+   -p blade -o ~/project/slurm_logs/${f}.%j.out ~/project/tmp/${f}.sh <<EOF
+#!/bin/bash
+shifter –image=mpgagebioinformatics/bioinformatics_software:v1.0.1 << SHI	
+#!/bin/bash
+source ~/.bashrc 
+cd ~/project/raw_data			
+bwa mem –T 18 ${f}	
+SHI			
+EOF
+
+done			
+exit
+```
+- running the script -
+```bash
+chmod +x automation.slurm.shifter.sh
+./automation.slurm.shifter.sh
+```
 
 ## Databases and reference genomes
 
