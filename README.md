@@ -201,9 +201,9 @@ module unload rlang
 ```
 before running `shifter`. This is automaticaly done when running the `mpgagebioinformatics/bioinformatics_software` if you use the `.bashrc` provided above.
 
-Running a script with shifter
+**Running a script with shifter using the `mpgagebioinformatics/bioinformatics_software` image:**
 
-- example script: `test.sh` -
+- example script: `test.sh`
 ```bash
 #!/bin/bash
 source ~/.bashrc
@@ -220,7 +220,7 @@ which R
 
 Rscript -e "print('This is R')"
 ```
-- running the script -
+- running the script
 ```bash
 chmod +x test.shifter.sh
 shifter \
@@ -228,9 +228,9 @@ shifter \
     ./test.sh
 ```
 
-Running a scipt over shifter on slurm:
+**Running a scipt over shifter on slurm:**
 
-- example script: `test.slurm.sh` - 
+- example script: `test.slurm.sh`
 ```bash
 #!/bin/bash
 #SBATCH --cpus-per-task=18
@@ -258,19 +258,19 @@ Rscript -e "print('This is R')"
 
 SHI
 ```
-- running the script over slurm -
+- running the script over slurm
 ```bash
 chmod +x test.slurm.sh
 sbatch test.slurm.sh
 ```
-- check the output - 
+- check the output
 ```bash
 cat test.shifter.out
 ```
 
-Example for automation over a batch of jobs:
+**Example for automation over a batch of jobs:**
 
-- example script: `automation.slurm.shifter.sh` - 
+- example script: `automation.slurm.shifter.sh`
 ```bash
 #!/bin/bash
 cd ~/project/raw_data			
@@ -291,7 +291,7 @@ EOF
 done			
 exit
 ```
-- running the script -
+- running the script
 ```bash
 chmod +x automation.slurm.shifter.sh
 ./automation.slurm.shifter.sh
