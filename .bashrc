@@ -31,6 +31,6 @@ export PROMPT_COMMAND='DIR=`pwd|sed -e "s!$HOME!~!"`; if [ ${#DIR} -gt 30 ]; the
 export PS1="\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\$CurDir\$\[\033[00m\] "
 
 # shifter mpiage software containers logins
-if [[ -e /home/mpiage/.bashrc ]]; then module purge; unset PYTHONHOME PYTHONUSERBASE PYTHONPATH; source /home/mpiage/.bashrc; export MODULEPATH=$MODF/general:$MODF/libs:$MODF/bioinformatics:/beegfs/common/software/containers/modules/modulefiles ; fi
+if [[ -e /home/mpiage/.bashrc ]]; then module purge; unset PYTHONHOME PYTHONUSERBASE PYTHONPATH; source /home/mpiage/.bashrc; export MODULEPATH=/beegfs/common/software/containers/modules/modulefiles:$MODF/general:$MODF/libs:$MODF/bioinformatics ; fi
 
 
