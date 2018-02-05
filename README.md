@@ -533,8 +533,10 @@ So you have your personal namespace and you can create new namespaces for specia
 Bevor creating namespaces you need a team where you are in and can add members.
 
 The URLs for your Images will look like this: hub.age.mpg.de/namespace/image:version
+
 So in case of a user this could be: hub.age.mpg.de/drosskopp/debian:jessie
-You can use them with docker and shifterimg
+
+You can use these URLs with docker and shifterimg
 
 **Teams**
 
