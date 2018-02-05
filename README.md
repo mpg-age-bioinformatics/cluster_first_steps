@@ -514,3 +514,54 @@ This will default to port 8888. You can also choose an alternative port by for e
 srun jupyter notebook --config ~/jupyter_notebook_config.py --port 8989
 ```
 
+## Docker Hub
+Using our Dockerhub for docker images wich should not be public available.
+
+Go to https://hub.age.mpg.de and login with your LDAP credentials. The 
+
+**Namespaces**
+Namespaces are like sub folders for the URL where the docker repositorys are in.
+Namespaces do have Access rights. You see these rights right beside the Name under Namespaces.
+- The lock means only explicit users can access
+- Group means all logged in users can access
+- Globe means it is shared with the whole world
+
+So you have your personal namespace and you can create new namespaces for special teams and access rights.
+Bevor creating namespaces you need a team where you are in and can add members.
+
+The URLs for your Images will look like this: hub.age.mpg.de/namespace/image:version
+So in case of a user this could be: hub.age.mpg.de/drosskopp/debian:jessie
+You can use them with docker and shifterimg
+
+**Teams**
+Under teams you can create such and add users to use these for the rights of namespaces.
+
+**Application Tokens**
+If you klick in the upper right on your name you can create applikation tokens.
+- PLEASE USE IT.
+This is important because if you use your password with the docker command or schifterimg it will be saved in your homefolder or on the serverside.
+- So klick: Create new token
+- Give it a predictive name
+- And use the token that appears after saving in the upper right corner for auth with docker or schifterimg commands
+
+**Use with docker**
+Now you can use Docker to push the first image.
+- If you dont have a own docker image, get one at docker.io
+```bash
+- docker pull alpine:latest
+```
+Than Tag your Image for our registry
+```bash
+- docker tag alpine:latest hub.age.mpg.de/drosskopp/anyname:version
+```
+- Login to our registry (use the application token you created)
+```bash
+	docker login hub.age.mpg.de
+	Username: DRosskopp 
+	Password: 
+	Login Succeeded
+```
+- Now push your image and inspect it after under repositories in the interface
+```bash
+docker push hub.age.mpg.de/drosskopp/anyname:version
+```
