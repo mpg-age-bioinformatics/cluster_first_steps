@@ -517,9 +517,10 @@ srun jupyter notebook --config ~/jupyter_notebook_config.py --port 8989
 ## Docker Hub
 Using our Dockerhub for docker images wich should not be public available.
 
-Go to https://hub.age.mpg.de and login with your LDAP credentials. The 
+Go to https://hub.age.mpg.de and login with your LDAP credentials.
 
 **Namespaces**
+
 Namespaces are like sub folders for the URL where the docker repositorys are in.
 Namespaces do have Access rights. You see these rights right beside the Name under Namespaces.
 - The lock means only explicit users can access
@@ -534,9 +535,11 @@ So in case of a user this could be: hub.age.mpg.de/drosskopp/debian:jessie
 You can use them with docker and shifterimg
 
 **Teams**
+
 Under teams you can create such and add users to use these for the rights of namespaces.
 
 **Application Tokens**
+
 If you klick in the upper right on your name you can create applikation tokens.
 - PLEASE USE IT.
 This is important because if you use your password with the docker command or schifterimg it will be saved in your homefolder or on the serverside.
@@ -545,6 +548,7 @@ This is important because if you use your password with the docker command or sc
 - And use the token that appears after saving in the upper right corner for auth with docker or schifterimg commands
 
 **Use with docker**
+
 Now you can use Docker to push the first image.
 - If you dont have a own docker image, get one at docker.io
 ```bash
