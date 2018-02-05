@@ -16,6 +16,8 @@
 
 [JupyterHub](#jupyterhub)
 
+[DockerHub](#DockerHub)
+
 ## General
 
 If you would like to get access to the local cluster at the MPI-AGE
@@ -514,7 +516,7 @@ This will default to port 8888. You can also choose an alternative port by for e
 srun jupyter notebook --config ~/jupyter_notebook_config.py --port 8989
 ```
 
-## Docker Hub
+## DockerHub
 Using our Dockerhub for docker images wich should not be public available.
 
 Go to https://hub.age.mpg.de and login with your LDAP credentials.
@@ -560,9 +562,9 @@ Than Tag your Image for our registry
 ```
 - Login to our registry (use the application token you created)
 ```bash
-	docker login hub.age.mpg.de
-	Username: DRosskopp 
-	Password: 
+docker login hub.age.mpg.de
+Username: DRosskopp 
+Password: 
 	Login Succeeded
 ```
 - Now push your image and inspect it after under repositories in the interface
