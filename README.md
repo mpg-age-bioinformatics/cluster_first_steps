@@ -16,7 +16,7 @@
 
 [JupyterHub](#jupyterhub)
 
-[DockerHub](#DockerHub)
+[DockerHub](#dockerhub)
 
 ## General
 
