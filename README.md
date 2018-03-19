@@ -280,7 +280,7 @@ for f in $(ls *.fastq);
    do  rm ~/project/slurm_logs/${f}.*.out
 
    sbatch --cpus-per-task=18 --mem=15gb --time=5-24 \
-   -p blade -o ~/project/slurm_logs/${f}.%j.out ~/project/tmp/${f}.sh <<EOF
+   -p blade -o ~/project/slurm_logs/${f}.%j.out <<EOF
 #!/bin/bash
 shifter –image=mpgagebioinformatics/bioinformatics_software:v1.0.1 << SHI	
 #!/bin/bash
