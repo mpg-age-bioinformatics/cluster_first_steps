@@ -556,11 +556,11 @@ This is important because if you use your password with the docker command or sc
 Now you can use Docker to push the first image.
 - If you dont have a own docker image, get one at docker.io
 ```bash
-- docker pull alpine:latest
+docker pull alpine:latest
 ```
 Than Tag your Image for our registry
 ```bash
-- docker tag alpine:latest hub.age.mpg.de/drosskopp/anyname:version
+docker tag alpine:latest hub.age.mpg.de/drosskopp/anyname:version
 ```
 - Login to our registry (use the application token you created)
 ```bash
