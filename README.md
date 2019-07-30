@@ -463,6 +463,8 @@ sshfs JDoe@amalia:/beegfs/group_XX ~/cluster_mount
 
 An RStudio-server connected to the HPC shared file system is available on [https://rstudio.age.mpg.de](https://rstudio.age.mpg.de).
 
+If you got notes like ```note: use option -std=c99 or -std=gnu99 to compile your code``` during installation of R-Modules, please create the files ~/.R/Makevars and ~/.R/3.5.1/Makevars with the content ```CC = gcc -std=c99``` 
+
 ## JupyterHub
 
 A JupyterHub connected to the HPC shared file system is available on [https://jupyterhub.age.mpg.de](https://jupyterhub.age.mpg.de).
