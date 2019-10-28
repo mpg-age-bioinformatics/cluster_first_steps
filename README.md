@@ -230,7 +230,7 @@ shifter \
     ./test.sh
 ```
 
-**Running a scipt over shifter on slurm:**
+**Running a script over shifter on slurm:**
 
 - example script: `test.slurm.sh`
 ```bash
@@ -299,6 +299,73 @@ exit
 chmod +x automation.slurm.shifter.sh
 ./automation.slurm.shifter.sh
 ```
+
+## Singularity
+
+Like Shifter Singularity enables container images for HPC. In a nutshell, Singularity allows an HPC system to efficiently and safely allow end-users to run a docker image.
+
+An introduction to docker and how to generate your own images can be found [here](http://github.com/mpg-age-bioinformatics/mpg-age-bioinformatics.github.io/blob/master/tutorials/reproducible_multilang_workflows_with_jupyter_on_docker ). More information on how to build docker images and best practices for writing Dockerfiles can be found [here](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/) and [here](https://docs.docker.com/engine/reference/builder/), respectively.
+
+There are a few differences compared to shifter:
+Singularity is available without loading a module from environment system.
+As opposed to shifter images are loaded, converted and saved by the user. This mean you can manage your images as files.
+Some docker images (Like the "software" image) are bigger than the /tmp folder on our nodes so you need to set a separate /tmp folder for download and convert. If the Image is containing hardlinks you can't set this to a beegfs folder or you will get error messages like this.
+```
+packer failed to pack: While unpacking tmpfs: unpack: error extracting layer
+```
+So please set /srv/tmp as your $TMPDIR variable first if you experiencing errors during image download.
+
+Example of running an image on amalia
+```
+✓ DRosskopp@amaliax:~$ export TMPDIR=/srv/tmp
+✓ DRosskopp@amaliax:~$ singularity pull --docker-login bioinf.sif docker://hub.age.mpg.de/bioinformatics/software:v2.0.7
+Enter Docker Username: DRosskopp
+Enter Docker Password: 
+INFO:    Starting build...
+Getting image source signatures
+Skipping fetch of repeat blob sha256:f2aa67a397c49232112953088506d02074a1fe577f65dc2052f158a3e5da52e8
+Skipping fetch of repeat blob sha256:3f6b9e83e5d6033819db3ba797bbe47f2f076b7f34ec4013ed8b72e8e31ec5d6
+Skipping fetch of repeat blob sha256:bf3ecbd09edff2c407c73c9cfe8ac34b6c8a6f51924f85e80a1c16dc60c507ed
+Skipping fetch of repeat blob sha256:528d9147306959cbe46d20111957b025a37228d96f1bceb6b43508f84350924e
+Skipping fetch of repeat blob sha256:fe6621519f4c795af8befe1ba78f9a063dd35290b7c99cfbcf1609eeb195b905
+Skipping fetch of repeat blob sha256:550f7c533e43749d743fb96f5c8668948f994c5a24db9d5626ec10587714596f
+Skipping fetch of repeat blob sha256:4819569a7cf047babb2792d4909e044efcddf32ef7b8be41ebfd859454fafcc4
+Skipping fetch of repeat blob sha256:61604835e6cd4116d1b8558f920a4a3e0a527e5e177ecaba2f357b095da96c11
+Skipping fetch of repeat blob sha256:f536d63a048365fd563f4b1ebf7ff8b4e80d1927381b7d14b3526dac5f662e6f
+Skipping fetch of repeat blob sha256:4a5f46f898f5661f2e738165de9d075da9a30e05c431605837f63531e9e443de
+Skipping fetch of repeat blob sha256:ed9f07702f7e4360712eb7e76792ce247442b401203c1be83eba634afe14eae6
+Skipping fetch of repeat blob sha256:4a7b10854cebbdd9417559fc2dfd6f37968a18f30fb1657562f2076d294af804
+Skipping fetch of repeat blob sha256:644fd3174a744f364a3c8a3829457eb268e8e3d52f1cf66c419bdda62bc1e2c1
+Skipping fetch of repeat blob sha256:0d88ae9f4ee7d64a265003add40f702170e453fc5b2bd8d7e72a7f211ac32d18
+Skipping fetch of repeat blob sha256:5574fcf6b3cb463ee7b283770a12c7bf65784b68aa7b73272c769868be452cdf
+Skipping fetch of repeat blob sha256:07931a6d414573af5c7dac37d0432c65fb3ea0728aee087c5dc83eba3ff4e09c
+Skipping fetch of repeat blob sha256:84a67f64cd8b812c0155be2990423437ed2fec97296f785b8cbae99ad5de50e7
+Skipping fetch of repeat blob sha256:7a54abef2269cfe68932bd905e23fad2b54b625f88f46b98e14c89ca45977c26
+Skipping fetch of repeat blob sha256:74f2dec22f78293feba10a84d1c1e6449691541385384659a576f43b3cb81b8f
+Skipping fetch of repeat blob sha256:93ed5825f1592aaa497456fdac4d18691b02e2225ea738fc0aff258751d1d06f
+Skipping fetch of repeat blob sha256:c3c384cf4584bdda8121ff81d1ca9dc2985237e7d9cfad201982b6d27f3fd7f3
+Copying config sha256:1d05af2aa2187192dc817527df50e0c671fdb4fa7491014232e53aa6ea8af7df
+ 115.00 KiB / 115.00 KiB [==================================================] 0s
+Writing manifest to image destination
+Storing signatures
+INFO:    Creating SIF file...
+INFO:    Build complete: bioinf.sif
+✓ DRosskopp@amaliax:~$ ls -la bioinf.sif 
+-rwxr-xr-x 1 DRosskopp group_bit 5667733504 Oct 28 15:52 bioinf.sif
+✓ DRosskopp@amaliax:~$ du -hs bioinf.sif 
+5.3G	bioinf.sif
+✓ DRosskopp@amaliax:~$ singularity exec bioinf.sif /bin/bash
+✓ DRosskopp@amaliax:~$ cat /etc/deb
+debconf.conf    debian_version  
+✓ DRosskopp@amaliax:~$ cat /etc/debian_version 
+9.4
+✓ DRosskopp@amaliax:~$ exit
+exit
+✓ DRosskopp@amaliax:~$ cat /etc/redhat-release 
+CentOS Linux release 7.6.1810 (Core) 
+✓ DRosskopp@amaliax:~$
+```
+The full Dokumentation for Singularity is available [here](https://sylabs.io/guides/3.3/user-guide/index.html).
 
 ## Databases and reference genomes
 
