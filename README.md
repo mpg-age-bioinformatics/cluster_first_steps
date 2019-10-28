@@ -8,6 +8,8 @@
 
 [Shifter](#shifter)
 
+[Singularity](#singularity)
+
 [Databases and reference genomes](#databases-and-reference-genomes)
 
 [Data](#data)
