@@ -309,6 +309,7 @@ Like Shifter Singularity enables container images for HPC. In a nutshell, Singul
 An introduction to docker and how to generate your own images can be found [here](http://github.com/mpg-age-bioinformatics/mpg-age-bioinformatics.github.io/blob/master/tutorials/reproducible_multilang_workflows_with_jupyter_on_docker ). More information on how to build docker images and best practices for writing Dockerfiles can be found [here](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/) and [here](https://docs.docker.com/engine/reference/builder/), respectively.
 
 There are a few differences compared to shifter:
+
 Singularity is available without loading a module from environment system.
 As opposed to shifter images are loaded, converted and saved by the user. This mean you can manage your images as files.
 Some docker images (Like the "software" image) are bigger than the /tmp folder on our nodes so you need to set a separate /tmp folder for download and convert. If the Image is containing hardlinks you can't set this to a beegfs folder or you will get error messages like this.
