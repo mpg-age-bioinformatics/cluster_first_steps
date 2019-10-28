@@ -163,7 +163,7 @@ An introduction to docker and how to generate your own images can be found [here
 
 ```
 # load the required module
-module load shifter/latest
+module load shifter
 
 # Pull and image (administrators only)
 shifterimg pull docker/ubuntu:15.10
