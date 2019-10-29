@@ -438,7 +438,7 @@ Submitted batch job 4684802
 ```
 - check the output
 ```bash
-✓ DRosskopp@amaliax:~$ cat test.shifter.out
+✓ DRosskopp@amaliax:~$ cat test.singularity.out
 /modules/software/python/2.7.15/bin/python
 This is python
 /modules/software/rlang/3.5.1/bin/R
