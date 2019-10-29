@@ -243,7 +243,7 @@ shifter \
 #SBATCH -p blade
 #SBATCH -o test.shifter.out
 
-shifter –-image=mpgagebioinformatics/bioinformatics_software:v1.0.1 << SHI
+shifter –-image=mpgagebioinformatics/bioinformatics_software:v1.0.1 /bin/bash << SHI
 #!/bin/bash
 
 source ~/.bashrc 
@@ -284,7 +284,7 @@ for f in $(ls *.fastq);
    sbatch --cpus-per-task=18 --mem=15gb --time=5-24 \
    -p blade -o ~/project/slurm_logs/${f}.%j.out <<EOF
 #!/bin/bash
-shifter –image=mpgagebioinformatics/bioinformatics_software:v1.0.1 << SHI	
+shifter –image=mpgagebioinformatics/bioinformatics_software:v1.0.1 /bin/bash << SHI	
 #!/bin/bash
 source ~/.bashrc 
 module load bwa
