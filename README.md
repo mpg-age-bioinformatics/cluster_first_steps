@@ -370,6 +370,112 @@ CentOS Linux release 7.6.1810 (Core)
 ```
 The full Dokumentation for Singularity is available [here](https://sylabs.io/guides/3.3/user-guide/index.html).
 
+**Running a script with singularity using the `mpgagebioinformatics/bioinformatics_software` image:**
+
+- example script: `test.sh`
+```bash
+#!/bin/bash
+source ~/.bashrc
+
+module load rlang python
+
+which python
+
+python << EOF
+print "This is python"
+EOF
+
+which R
+
+Rscript -e "print('This is R')"
+```
+- running the script
+```bash
+✓ DRosskopp@amaliax:~$ chmod +x test.sh
+✓ DRosskopp@amaliax:~$ singularity exec bioinf.sif ./test.sh
+/modules/software/python/2.7.15/bin/python
+This is python
+/modules/software/rlang/3.5.1/bin/R
+[1] "This is R"
+```
+
+**Running a script over singularity on slurm:**
+
+- example script: `test.slurm.sh`
+```bash
+#!/bin/bash
+#SBATCH --cpus-per-task=18
+#SBATCH --mem=15gb
+#SBATCH --time=5-24 
+#SBATCH -p blade
+#SBATCH -o test.singularity.out
+
+singularity exec bioinf.sif /bin/bash << SHI
+#!/bin/bash
+
+source ~/.bashrc 
+
+module load rlang python
+
+which python
+
+python << EOF
+print "This is python"
+EOF
+
+which R
+
+Rscript -e "print('This is R')"
+
+SHI
+```
+- running the script over slurm
+```bash
+✓ DRosskopp@amaliax:~$ chmod +x test.slurm.sh
+✓ DRosskopp@amaliax:~$ sbatch test.slurm.sh
+Submitted batch job 4684802
+✓ DRosskopp@amaliax:~$
+```
+- check the output
+```bash
+✓ DRosskopp@amaliax:~$ cat test.shifter.out
+/modules/software/python/2.7.15/bin/python
+This is python
+/modules/software/rlang/3.5.1/bin/R
+[1] "This is R"
+✓ DRosskopp@amaliax:~$
+```
+
+**Example for automation over a batch of jobs:**
+
+- example script: `automation.slurm.singularity.sh`
+```bash
+#!/bin/bash
+cd ~/project/raw_data			
+for f in $(ls *.fastq); 
+   do  rm ~/project/slurm_logs/${f}.*.out
+
+   sbatch --cpus-per-task=18 --mem=15gb --time=5-24 \
+   -p blade -o ~/project/slurm_logs/${f}.%j.out <<EOF
+#!/bin/bash
+singularity exec bioinf.sif /bin/bash << SHI	
+#!/bin/bash
+source ~/.bashrc 
+module load bwa
+cd ~/project/raw_data			
+bwa mem –T 18 ${f}	
+SHI			
+EOF
+
+done			
+exit
+```
+- running the script
+```bash
+chmod +x automation.slurm.singularity.sh
+./automation.slurm.singularity.sh
+```
+
 ## Databases and reference genomes
 
 We mantain a variety of databases and indexed genomes. Please contact us if you would require any database to be updated, genome reference added, or additional support on this.
