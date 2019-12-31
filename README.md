@@ -304,21 +304,29 @@ chmod +x automation.slurm.shifter.sh
 
 ## Singularity
 
-Like Shifter Singularity enables container images for HPC. In a nutshell, Singularity allows an HPC system to efficiently and safely allow end-users to run a docker image.
+Like Shifter, Singularity enables container images for HPC. In a nutshell, Singularity allows end-users to efficiently and safely run a docker image in an HPC system.
 
 An introduction to docker and how to generate your own images can be found [here](http://github.com/mpg-age-bioinformatics/mpg-age-bioinformatics.github.io/blob/master/tutorials/reproducible_multilang_workflows_with_jupyter_on_docker ). More information on how to build docker images and best practices for writing Dockerfiles can be found [here](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/) and [here](https://docs.docker.com/engine/reference/builder/), respectively.
 
 There are a few differences compared to shifter:
 
 Singularity is available without loading a module from environment system.
-As opposed to shifter images are loaded, converted and saved by the user. This mean you can manage your images as files.
-Some docker images (Like the "software" image) are bigger than the /tmp folder on our nodes so you need to set a separate /tmp folder for download and convert. If the Image is containing hardlinks you can't set this to a beegfs folder or you will get error messages like this.
+As opposed to shifter, images are loaded, converted and saved by the user. This means you can manage your images as files.
+Some docker images (like our "bioinformatics software" image) are bigger than the `/tmp` folder on our nodes so you need to set a separate `/tmp` folder for download and convertion. If the image is containing hardlinks you can't set this to a beegfs folder or you will get error messages like this.
 ```
 packer failed to pack: While unpacking tmpfs: unpack: error extracting layer
 ```
-So please set /srv/tmp as your $TMPDIR variable first if you experiencing errors during image download.
+So please set `/srv/tmp` as your `$TMPDIR` variable first if you are experiencing errors during image download.
 
-Example of running an image on amalia
+Example 1:
+```
+export TMPDIR=/srv/tmp
+singularity pull bioinformatics_software.v3.0.0.sif  docker://index.docker.io/mpgagebioinformatics/bioinformatics_software:v3.0.0
+singularity exec bioinformatics_software.v3.0.0.sif /bin/bash
+```
+
+Example 2:
+
 ```
 ✓ DRosskopp@amaliax:~$ export TMPDIR=/srv/tmp
 ✓ DRosskopp@amaliax:~$ singularity pull --docker-login bioinf.sif docker://hub.age.mpg.de/bioinformatics/software:v2.0.7
@@ -368,7 +376,7 @@ exit
 CentOS Linux release 7.6.1810 (Core) 
 ✓ DRosskopp@amaliax:~$
 ```
-The full Dokumentation for Singularity is available [here](https://sylabs.io/guides/3.3/user-guide/index.html).
+The full documentation for Singularity is available [here](https://sylabs.io/guides/3.3/user-guide/index.html).
 
 **Running a script with singularity using the `mpgagebioinformatics/bioinformatics_software` image:**
 
