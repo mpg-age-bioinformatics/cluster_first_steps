@@ -649,6 +649,29 @@ An RStudio-server connected to the HPC shared file system is available on [https
 
 If you got notes like ```note: use option -std=c99 or -std=gnu99 to compile your code``` during installation of R-Modules, please create the files ~/.R/Makevars and ~/.R/3.5.1/Makevars with the content ```CC = gcc -std=c99``` 
 
+**Running R-Studio images over the terminal or locally on your laptop**
+
+Eg. R-3.6.3
+
+```
+amaliax:~$ singularity exec /beegfs/common/singularity/r.3.6.3.sif /bin/bash
+amaliax:~$ which R
+/usr/local/bin/R
+amaliax:~$ R
+ > .libPaths()
+[1] "/beegfs/group_bit/home/JBoucas/.R/3.6.3/R_LIBS_USER"
+[2] "/usr/local/lib/R/site-library"                      
+[3] "/usr/local/lib/R/library" 
+```
+
+```
+$ mkdir -p ~/r-age/3.6.3
+$ docker run -v ~/r-age/3.6.3:/r_librarires -it mpgagebioinformatics/r:3.6.3 /bin/bash
+root@e89537806b72:/# R
+> .libPaths("/r_librarires/")
+```
+
+
 ## JupyterHub
 
 A JupyterHub connected to the HPC shared file system is available on [https://jupyterhub.age.mpg.de](https://jupyterhub.age.mpg.de).
