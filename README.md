@@ -666,11 +666,32 @@ amaliax:~$ R
 
 ```
 $ mkdir -p ~/r-age/3.6.3
-$ docker run -v ~/r-age/3.6.3:/r_librarires -it mpgagebioinformatics/r:3.6.3 /bin/bash
-root@e89537806b72:/# R
-> .libPaths("/r_librarires/")
+$ docker run -d -p 8787:8787 -v ~/rstudio-age/:/home/rstudio --name rstudio -e PASSWORD=yourpasswordhere mpgagebioinformatics/r:3.6.3
+```
+You can now access rstudio over http://localhost:8787 username: `rstudio` password: `yourpasswordhere` .
+
+If you wish to run R from the terminal instead you can:
+```
+$ docker exec --user rstudio -it rstudio R
 ```
 
+For installing system libraries as root:
+```
+$ docker exec -it rstudio /bin/bash
+```
+Please realise that system libraries will be gone once the container is removed.
+
+Stopping the container:
+```
+$ docker stop rstudio
+```
+
+Rmoving the container:
+```
+$ docker rm rstudio
+```
+
+The folders `/beegfs/group_bit/home/<username>/.R/3.6.3/R_LIBS_USER` in amalia are homologous to `~/r-age/3.6.3` in your laptop. You can copy or `rsync` both folders if you want to use libraries accross machines.
 
 ## JupyterHub
 
