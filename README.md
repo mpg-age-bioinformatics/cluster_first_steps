@@ -651,6 +651,8 @@ If you got notes like ```note: use option -std=c99 or -std=gnu99 to compile your
 
 **Running R-Studio images over the terminal or locally on your laptop**
 
+This section describes our to reproduce the R-Studio installation in [https://rstudio.age.mpg.de](https://rstudio.age.mpg.de) on your local laptop.
+
 Eg. R-3.6.3
 
 ```
