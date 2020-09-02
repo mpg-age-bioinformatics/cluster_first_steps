@@ -672,7 +672,7 @@ This section describes our to reproduce the R-Studio installation in [https://rs
 
 ```
 $ mkdir -p ~/r-age/3.6.3
-$ docker run -d -p 8787:8787 -v ~/rstudio-age/:/home/rstudio --name rstudio -e PASSWORD=yourpasswordhere mpgagebioinformatics/r:3.6.3
+$ docker run -d -p 8787:8787 -v ~/rstudio-age/:/home/rstudio --name rstudio -e PASSWORD=yourpasswordhere mpgagebioinformatics/rstudio-age:3.6.3
 ```
 You can now access rstudio over http://localhost:8787 username: `rstudio` password: `yourpasswordhere` .
 
