@@ -649,7 +649,7 @@ An RStudio-server connected to the HPC shared file system is available on [https
 
 If you got notes like ```note: use option -std=c99 or -std=gnu99 to compile your code``` during installation of R-Modules, please create the files ~/.R/Makevars and ~/.R/3.5.1/Makevars with the content ```CC = gcc -std=c99``` 
 
-**Running R-Studio images over the terminal or locally on your laptop**
+**Running R-Studio images over the terminal on the server**
 
 This section describes our to reproduce the R-Studio installation in [https://rstudio.age.mpg.de](https://rstudio.age.mpg.de) on your local laptop.
 
@@ -665,6 +665,10 @@ amaliax:~$ R
 [2] "/usr/local/lib/R/site-library"                      
 [3] "/usr/local/lib/R/library" 
 ```
+
+**Running R-Studio images on your laptop**
+
+This section describes our to reproduce the R-Studio installation in [https://rstudio.age.mpg.de](https://rstudio.age.mpg.de) on your local laptop.
 
 ```
 $ mkdir -p ~/r-age/3.6.3
