@@ -703,8 +703,6 @@ The folders `/beegfs/group_bit/home/<username>/.R/3.6.3/R_LIBS_USER` in amalia a
 
 A JupyterHub connected to the HPC shared file system is available on [https://jupyterhub.age.mpg.de](https://jupyterhub.age.mpg.de).
 
-*Kernels* : Python/2.7.12; Python/3.6.0; R/3.3.2; ruby/2.4.0 
-
 To use it for the first time make sure the file `~/.jupyter/jupyter_notebook_config.py` has no content or does not exist.
 
 Users can add environment variables to the JupyterHub by making use of their local `.jupyter` config. Eg. Adding `bedtools` to your JupyterHub path:
@@ -717,39 +715,23 @@ Contents of the `jupyter_notebook_config.py`:
 import os
 os.environ["PATH"]="/beegfs/common/software/2017/modules/software/bedtools/2.26.0/bin:"+os.environ["PATH"]
 ```
+**Using the jupyterhub image on your local latpop with docker**
 
-The JupyterHub environment can be loaded on the normal `ssh` connection by 
-```bash
-module load jupyterhub
+```
+docker pull mpgagebioinformatics/jupyter-age:latest
+mkdir -p ${HOME}/jupyter-age/jupyter/ ${HOME}/jupyter-age/data/
+docker run -v ${HOME}/jupyter-age/jupyter/:/root/.jupyterhub/ -v ${HOME}/jupyter-age/data/:/srv/jupyterhub/ -p 8081:8000 -it mpgagebioinformatics/jupyter-age:latest /bin/bash
+jupyter lab --ip=0.0.0.0 --port=8000 --allow-root
 ```
 
-As complete module, jupyterhub has is own *Python2* and *Python3* environment. Thus, if you want to batch *Python* code that you developed on the *JupyterHub* you should make use of the `module load jupyterhub`.
+A link of the type http://127.0.0.1:8000/?token=e8a687aa90fca358de6ce6b8a8ea802d11b257dd63a41eef will be shown to you. Replace the port and an ip so that it looks like this - http://0.0.0.0:8081/?token=e8a687aa90fca358de6ce6b8a8ea802d11b257dd63a41eef and use this link to access jupyter lab.
 
-The *R* kernel makes use of the *module rlang/3.3.2*. Thus, if you want to batch *R* code that you developed on the *JupyterHub* you should make use of the `module load rlang`.
-
-The *ruby* kernel makes use of the *module ruby/2.4.0*. Thus, if you want to batch *ruby* code that you developed on the *JupyterHub* you should make use of the `module load ruby/2.4.0`.
-
-**Using the Modules system from within JupyterHub**
-
-If you start a Terminal from Jupyterhub `~/.bashrc` is processed and `~/.profile` not. So if you want to use modules from the terminal add the content of [`.bashrc`](https://github.com/mpg-age-bioinformatics/cluster_first_steps/blob/master/.bashrc) to your `~/.bashrc`.
+All installed Python and R packages will me stored on your hosts `${HOME}/jupyter-age/jupyter/` while data that you might wish to use will need to be in `${HOME}/jupyter-age/data/`.
  
-**Running Jupyter over slurm** 
+**Running the Jupyter enviroment over the terminal**
 
-You can also run `jupyter notebook` over *slurm*. If you decide to do this, only the *Python3* kernel will be available. You can install and registers additional kernels for your user if you wish. Contact us if you need help on this.
-
-Before the first usage make sure you download the correct config file:
-```bash
-cd ~
-wget https://raw.githubusercontent.com/mpg-age-bioinformatics/cluster_first_steps/master/jupyter_notebook_config.py
 ```
-Afterwards:
-```bash
-module load jupyterhub
-srun jupyter notebook --config ~/jupyter_notebook_config.py
-```
-This will default to port 8888. You can also choose an alternative port by for example: 
-```bash
-srun jupyter notebook --config ~/jupyter_notebook_config.py --port 8989
+amaliax:~$ singularity exec /beegfs/common/singularity/jupyter.2.0.0.sif /bin/bash
 ```
 
 ## DockerHub
