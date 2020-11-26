@@ -734,6 +734,8 @@ All installed Python and R packages will me stored on your hosts `${HOME}/jupyte
 amaliax:~$ singularity exec /beegfs/common/singularity/jupyter.2.0.0.sif /bin/bash
 ```
 
+If you are using our latest instance of JupyterHub - jupyterhub-test.age.mpg.de - please check the respective [README](https://github.com/mpg-age-bioinformatics/jupyterhub/tree/master/3.0.0).
+
 ## DockerHub
 Using our Dockerhub for docker images wich should not be public available.
 
