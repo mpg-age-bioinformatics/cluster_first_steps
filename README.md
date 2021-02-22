@@ -715,6 +715,27 @@ Contents of the `jupyter_notebook_config.py`:
 import os
 os.environ["PATH"]="/beegfs/common/software/2017/modules/software/bedtools/2.26.0/bin:"+os.environ["PATH"]
 ```
+**Creating conda enviroments with jupyter kernels
+
+Go to https://jupyterhub.age.mpg.de/ 
+
+File > New > Terminal
+
+Then:
+```
+conda create -n ex
+conda activate ex
+conda install -c anaconda ipykernel
+python -m ipykernel install --user --name ex --display-name "Python (ex)"
+```
+Restart your server: 
+
+File > Hub Control Panel > Stop My Server 
+
+Logout
+
+Login again and you should see "Python (ex)" in the Notebook as well as Console section of the Laucher.
+
 **Using the jupyterhub image on your local latpop with docker**
 
 ```
