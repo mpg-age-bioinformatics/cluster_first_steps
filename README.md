@@ -715,7 +715,7 @@ Contents of the `jupyter_notebook_config.py`:
 import os
 os.environ["PATH"]="/beegfs/common/software/2017/modules/software/bedtools/2.26.0/bin:"+os.environ["PATH"]
 ```
-**Creating conda enviroments with jupyter kernels
+**Creating conda enviroments with jupyter kernels**
 
 Go to https://jupyterhub.age.mpg.de/ 
 
