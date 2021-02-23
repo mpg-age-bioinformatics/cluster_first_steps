@@ -734,7 +734,7 @@ File > Hub Control Panel > Stop My Server
 
 Logout
 
-Login again and you should see "Python (ex)" in the Notebook as well as Console section of the Laucher.
+Login again and you should see "Python (ex)" in the Notebook as well as Console section of the Launcher.
 
 **Using the jupyterhub image on your local latpop with docker**
 
