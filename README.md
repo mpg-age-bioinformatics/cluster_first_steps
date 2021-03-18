@@ -378,6 +378,18 @@ CentOS Linux release 7.6.1810 (Core)
 ```
 The full documentation for Singularity is available [here](https://sylabs.io/guides/3.3/user-guide/index.html).
 
+**Downloading images with authentication from [hub.age.mpg.de](https://hub.age.mpg.de):** 
+
+Login to [hub.age.mpg.de](https://hub.age.mpg.de) and generate an encrypted password by clicking on your username
+and then Account settings > Generate encrypted password.
+
+Afterwards:
+```
+export SINGULARITY_DOCKER_USERNAME=<your username>
+export SINGULARITY_DOCKER_PASSWORD=<your password>
+singularity pull </path/to/image.sif> docker://hub.age.mpg.de/<namespace>/<image name>:<image tag>
+```
+
 **Running a script with singularity using the `mpgagebioinformatics/bioinformatics_software` image:**
 
 - example script: `test.sh`
