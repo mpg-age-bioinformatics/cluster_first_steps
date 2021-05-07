@@ -735,6 +735,9 @@ File > New > Terminal
 
 Then:
 ```
+mkdir -p ~/.conda/pkgs
+export CONDA_PKGS_DIRS=~/.conda/pkgs
+conda config --show pkgs_dirs
 conda create -n ex
 conda activate ex
 conda install -c anaconda ipykernel
