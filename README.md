@@ -30,17 +30,17 @@ An introduction to HPC and SLURM can be found [here](http://github.com/mpg-age-b
 Once you have been given access you can login to one of the 2 head nodes with:
 
 ```bash
-ssh -XY UName@amalia
+ssh -XY UName@c3po
 ```
 
 or
 
 ```bash
-ssh -XY UName@amaliax
+ssh -XY UName@r2d2
 ```
 
 Please note that while `amalia` is a virtual machine (with 8 cores, 32 GB RAM, no infiniband connection, and no X forwarding)
-`amaliax` is a blade node (with 40 cores, 250 GB RAM, infiniband network, and X forwarding).
+`r2d2` is a blade node (with 40 cores, 250 GB RAM, infiniband network, and X forwarding).
 
 The first time you login you should download the following `.bashrc` and `.bash_profile` and source them:
 
@@ -103,11 +103,11 @@ scontrol update job <job id> partition=<partition1>,<partition2>,<partition3>
 scontrol update job <job id> partition=<partition1>,<partition2>,<partition3> nodelist=<node list>
 ```
 
-Submissions wihtout arguments specifications will result in `-p blade --cpus-per-task=2` and a time limit of 2 weeks.
+Submissions wihtout arguments specifications will result in `-p hooli --cpus-per-task=2` and a time limit of 2 weeks.
 
-For large job submissions please use the **blade** partition. For large jobs submission over large periods (eg. more than a week) please use the **long** partition. 
+For large job submissions please use the **hooli** partition.
 
-Feel free to use all partitions (ie. also the **himem** and **hugemem** partitions) for large job submissions as well provided you can easely make these two partitions free on request of other users (eg. if you are submiting short jobs this should be easely achievable by using `sview` to modify the target partitions of your jobs).
+Feel free to use all partitions (ie. also the **bighead** partition) for large job submissions as well provided you can easely make these partition free on request of other users (eg. if you are submiting short jobs this should be easely achievable by using `sview` to modify the target partitions of your jobs).
 
 When submitin jobs with `sbatch` you can also include SLURM parameters inside the script ie.:
 ```
@@ -240,7 +240,7 @@ shifter \
 #SBATCH --cpus-per-task=18
 #SBATCH --mem=15gb
 #SBATCH --time=5-24 
-#SBATCH -p blade
+#SBATCH -p hooli
 #SBATCH -o test.shifter.out
 
 shifter –-image=mpgagebioinformatics/bioinformatics_software:v1.0.1 /bin/bash << SHI
@@ -316,11 +316,11 @@ Some docker images (like our "bioinformatics software" image) are bigger than th
 ```
 packer failed to pack: While unpacking tmpfs: unpack: error extracting layer
 ```
-So please set `/srv/tmp` as your `$TMPDIR` variable first if you are experiencing errors during image download.
+So please set `/srv/tmp` as your `$TMPDIR` variable first if you are experiencing errors during image download. `export TMPDIR=/srv/tmp`
+
 
 Example 1:
 ```
-export TMPDIR=/srv/tmp
 singularity pull bioinformatics_software.v3.0.0.sif  docker://index.docker.io/mpgagebioinformatics/bioinformatics_software:v3.0.0
 singularity exec bioinformatics_software.v3.0.0.sif /bin/bash
 ```
@@ -328,7 +328,6 @@ singularity exec bioinformatics_software.v3.0.0.sif /bin/bash
 Example 2:
 
 ```
-✓ DRosskopp@amaliax:~$ export TMPDIR=/srv/tmp
 ✓ DRosskopp@amaliax:~$ singularity pull --docker-login bioinf.sif docker://hub.age.mpg.de/bioinformatics/software:v2.0.7
 Enter Docker Username: DRosskopp
 Enter Docker Password: 
@@ -427,7 +426,7 @@ This is python
 #SBATCH --cpus-per-task=18
 #SBATCH --mem=15gb
 #SBATCH --time=5-24 
-#SBATCH -p blade
+#SBATCH -p hooli
 #SBATCH -o test.singularity.out
 
 singularity exec bioinf.sif /bin/bash << SHI
@@ -582,14 +581,14 @@ or
 
 ```bash
 # on your client side
-scp UName@amalia:</path/to/file> ~/Desktop
+scp UName@c3po.age.mpg.de:</path/to/file> ~/Desktop
 ```
 
 transfer data to the server
 
 ```bash
 # on the client side
-scp </path/to/file> UName@amalia:~/
+scp </path/to/file> UName@c3po.age.mpg.de:~/
 ```
 
 #### Filezilla installation instructions for Ubuntu
@@ -652,7 +651,7 @@ on your client, run:
 
 ```bash
 mkdir ~/cluster_mount
-sshfs JDoe@amalia:/beegfs/group_XX ~/cluster_mount
+sshfs JDoe@c3po.age.mpg.de:/beegfs/group_XX ~/cluster_mount
 ```
 
 ## RStudio-server
@@ -767,7 +766,7 @@ All installed Python and R packages will me stored on your hosts `${HOME}/jupyte
 **Running the Jupyter enviroment over the terminal**
 
 ```
-amaliax:~$ singularity exec /beegfs/common/singularity/jupyter.2.0.0.sif /bin/bash
+r2d2:~$ singularity exec /beegfs/common/singularity/jupyter.2.0.0.sif /bin/bash
 ```
 
 If you are using our latest instance of JupyterHub - jupyterhub-test.age.mpg.de - please check the respective [README](https://github.com/mpg-age-bioinformatics/jupyterhub/tree/master/3.0.0).
