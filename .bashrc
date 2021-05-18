@@ -23,7 +23,8 @@ if [ ${BASH_VERSINFO:-0} -ge 3 ] && [ -r ${MODULESHOME}/init/bash_completion ]; 
  . ${MODULESHOME}/init/bash_completion
 fi
 
-source /beegfs/common/software/2017/age-bioinformatics.2017.only.rc
+# since the deployment of r2d2 only singularity is supported for installing software
+# source /beegfs/common/software/2017/age-bioinformatics.2017.only.rc
 # module load slurm
 
 # get a fancy prompt
