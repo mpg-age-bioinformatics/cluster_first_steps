@@ -24,7 +24,7 @@ if [ ${BASH_VERSINFO:-0} -ge 3 ] && [ -r ${MODULESHOME}/init/bash_completion ]; 
 fi
 
 source /beegfs/common/software/2017/age-bioinformatics.2017.only.rc
-module load slurm
+# module load slurm
 
 # get a fancy prompt
 export PROMPT_COMMAND='DIR=`pwd|sed -e "s!$HOME!~!"`; if [ ${#DIR} -gt 30 ]; then CurDir=..${DIR:${#DIR}-28}; else CurDir=$DIR; fi'
