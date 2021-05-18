@@ -154,6 +154,9 @@ Jupyterhub and R-Studio Server are using the R version 3.3.2 from the module env
 
 ## Shifter
 
+<details><summary>Shifter has been deprecated. Please use Singularity instead. Click here if you want to know more.</summary> 
+<p>
+
 *! This sechtion is under development - please contact us if you wish to use Shifter !*
 
 Shifter enables container images for HPC. In a nutshell, Shifter allows an HPC system to efficiently and safely allow end-users to run a [docker](http://www.docker.com) image.
@@ -302,6 +305,9 @@ chmod +x automation.slurm.shifter.sh
 ./automation.slurm.shifter.sh
 ```
 
+</p>
+</details>
+	
 ## Singularity
 
 Like Shifter, Singularity enables container images for HPC. In a nutshell, Singularity allows end-users to efficiently and safely run a docker image in an HPC system.
