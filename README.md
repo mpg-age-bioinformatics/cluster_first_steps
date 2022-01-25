@@ -318,12 +318,6 @@ There are a few differences compared to shifter:
 
 Singularity is available without loading a module from environment system.
 As opposed to shifter, images are loaded, converted and saved by the user. This means you can manage your images as files.
-Some docker images (like our "bioinformatics software" image) are bigger than the `/tmp` folder on our nodes so you need to set a separate `/tmp` folder for download and convertion. If the image is containing hardlinks you can't set this to a beegfs folder or you will get error messages like this.
-```
-packer failed to pack: While unpacking tmpfs: unpack: error extracting layer
-```
-So please set `/srv/tmp` as your `$TMPDIR` variable first if you are experiencing errors during image download. `export TMPDIR=/srv/tmp`
-
 
 Example 1:
 ```
