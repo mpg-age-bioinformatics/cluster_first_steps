@@ -1,0 +1,48 @@
+#!/bin/sh
+##SBATCH --time=08:00:00
+#SBATCH --signal=USR2
+#SBATCH --ntasks=1
+##SBATCH --cpus-per-task=2
+##SBATCH --mem=8192
+##SBATCH --output=/home/%u/rstudio-server.job.%j
+# customize --output path as appropriate (to a directory readable only by the user!)
+
+if [ "$1" = "list" ] ; then 
+
+singularity exec /beegfs/common/singularity/python/python_3.10.9.sif /bin/bash << EOF
+export PYTHONUSERBASE=~/.jupyter-age/python/${PYTHON_VERSION}
+export PATH=~/.jupyter-age/python/${PYTHON_VERSION}/bin:$PATH 
+jupyter server list
+EOF
+
+exit
+
+fi
+
+if [ "$1" = "" ] ; then V="3.10.9" ; else V=$1 ; fi 
+
+PYTHON_IMAGE="python_${V}.sif"
+PYTHON_VERSION=$(echo ${V} | awk -F. '{ print $1"."$2 }')
+
+if [ ! -d ~/.jupyter-age/python/${PYTHON_VERSION}/lib/python${PYTHON_VERSION}/site-packages/jupyterlab ] ; then
+
+singularity exec /beegfs/common/singularity/python/${PYTHON_IMAGE} /bin/bash << EOF
+export PYTHONUSERBASE=~/.jupyter-age/python/${PYTHON_VERSION}
+export PATH=~/.jupyter-age/python/${PYTHON_VERSION}/bin:$PATH 
+mkdir -p $PYTHONUSERBASE
+pip3 install jupyter jupyterlab --user
+mkdir ~/.jupyter-age/ssl_cert && cd ~/.jupyter-age/ssl_cert
+openssl genrsa -out jupyter.key 2048
+openssl req -new -key jupyter.key -out jupyter.csr -subj "/C=DE/ST=Koeln/L=Koeln/O=MPI-AGE/OU=Bioinformatics/CN=bioinformatics.age"
+openssl x509 -req -days 365 -in jupyter.csr -signkey jupyter.key -out jupyter.pem 
+EOF
+
+fi
+
+readonly PORT=$(python3 -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
+
+singularity exec /beegfs/common/singularity/python/${PYTHON_IMAGE} /bin/bash << EOF
+export PYTHONUSERBASE=~/.jupyter-age/python/${PYTHON_VERSION}
+export PATH=~/.jupyter-age/python/${PYTHON_VERSION}/bin:$PATH 
+jupyter lab --no-browser --ip=0.0.0.0 --port=${PORT} --certfile=~/.jupyter-age/ssl_cert/jupyter.pem --keyfile=~/.jupyter-age/ssl_cert/jupyter.key
+EOF

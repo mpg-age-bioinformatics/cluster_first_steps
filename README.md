@@ -20,6 +20,8 @@
 
 [DockerHub](#dockerhub)
 
+[Selfservice](Selfservice)
+
 ## General
 
 If you would like to get access to the local cluster at the MPI-AGE
@@ -51,6 +53,8 @@ wget https://raw.githubusercontent.com/mpg-age-bioinformatics/cluster_first_step
 source .bashrc
 source .bash_profile
 ```
+
+--- 
 
 ## SLURM, Simple Linux Utility for Resource Management 
 
@@ -122,6 +126,8 @@ When submitin jobs with `sbatch` you can also include SLURM parameters inside th
 ```
 and then run the script with `sbatch <script>`.
 
+--- 
+
 ## Environment Modules Project
 
 A centralized software system.
@@ -151,6 +157,8 @@ module unload SAMtools
 module purge  			
 ```
 Jupyterhub and R-Studio Server are using the R version 3.3.2 from the module environment. For this you have to `source /software/2017/age-bioinformatics.2017.only.rc` and `module load rlang`.
+
+--- 
 
 ## Shifter
 
@@ -308,6 +316,8 @@ chmod +x automation.slurm.shifter.sh
 </p>
 </details>
 	
+--- 
+
 ## Singularity
 
 Like Shifter, Singularity enables container images for HPC. In a nutshell, Singularity allows end-users to efficiently and safely run a docker image in an HPC system.
@@ -495,6 +505,8 @@ chmod +x automation.slurm.singularity.sh
 ./automation.slurm.singularity.sh
 ```
 
+--- 
+
 ## Databases and reference genomes
 
 We mantain a variety of databases and indexed genomes. Please contact us if you would require any database to be updated, genome reference added, or additional support on this.
@@ -556,7 +568,9 @@ alt_hisat2       cuffcompare.gtf              original.chr_patch_hapl_scaff.gtf 
 alt_star_2.4.1d  cuffcompare.results.tar.bz2  original.gtf                       primary_assembly_hisat    README_gtf                            toplevel_tophat2
 alt_tophat2      log                          original.primary_assembly.fa       primary_assembly_hisat2   toplevel_bowtie2                      toplevel_tophat2_cuffcompare
 ```
-   
+
+--- 
+ 
 ## Data
 
 Data stored on the cluster is not backed up. You are responsible for the backup of your data into a different file system.
@@ -654,6 +668,8 @@ mkdir ~/cluster_mount
 sshfs JDoe@c3po.age.mpg.de:/beegfs/group_XX ~/cluster_mount
 ```
 
+--- 
+
 ## RStudio-server
 
 An RStudio-server connected to the HPC shared file system is available on [https://rstudio.age.mpg.de](https://rstudio.age.mpg.de).
@@ -709,6 +725,8 @@ $ docker rm rstudio
 ```
 
 The folders `/beegfs/group_bit/home/<username>/.R/3.6.3/R_LIBS_USER` in amalia are homologous to `~/r-age/3.6.3` in your laptop. You can copy or `rsync` both folders if you want to use libraries accross machines.
+
+--- 
 
 ## JupyterHub
 
@@ -771,6 +789,8 @@ r2d2:~$ singularity exec /beegfs/common/singularity/jupyter.2.0.0.sif /bin/bash
 
 If you are using our latest instance of JupyterHub - jupyterhub-test.age.mpg.de - please check the respective [README](https://github.com/mpg-age-bioinformatics/jupyterhub/tree/master/3.0.0).
 
+--- 
+
 ## DockerHub
 Using our Dockerhub for docker images wich should not be public available.
 
@@ -827,4 +847,32 @@ Password:
 - Now push your image and inspect it after under repositories in the interface
 ```bash
 docker push hub.age.mpg.de/drosskopp/anyname:version
+```
+
+--- 
+
+## Selfservice
+
+For running your own `jupyter lab` and `rstudio-server` from the HPC you will need to 
+
+```bash
+export PATH=/beegfs/common/cluster_first_steps:${PATH}
+```
+
+A) and then, for `jupyter lab`,
+
+```bash
+cd ; srun -c 2 jupyter-age
+```
+ 
+for listing your running `jupyter` servers:
+
+```
+jupyter-age list
+```
+
+B) for `rstudio-server`,
+
+```bash
+cd ; srun -c 2 rstudio-age
 ```
