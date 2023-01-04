@@ -20,7 +20,7 @@
 
 [DockerHub](#dockerhub)
 
-[Selfservice](Selfservice)
+[Selfservice](#selfservice)
 
 ## General
 
