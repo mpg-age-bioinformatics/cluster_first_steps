@@ -10,8 +10,8 @@
 if [ "$1" = "list" ] ; then 
 
 singularity exec /beegfs/common/singularity/python/python_3.10.9.sif /bin/bash << EOF
-export PYTHONUSERBASE=~/.jupyter-age/python/${PYTHON_VERSION}
-export PATH=~/.jupyter-age/python/${PYTHON_VERSION}/bin:$PATH 
+export PYTHONUSERBASE=~/.jupyter-age/python/3.10
+export PATH=~/.jupyter-age/python/3.10/bin:$PATH 
 jupyter server list
 EOF
 
@@ -29,7 +29,7 @@ if [ ! -d ~/.jupyter-age/python/${PYTHON_VERSION}/lib/python${PYTHON_VERSION}/si
 singularity exec /beegfs/common/singularity/python/${PYTHON_IMAGE} /bin/bash << EOF
 export PYTHONUSERBASE=~/.jupyter-age/python/${PYTHON_VERSION}
 export PATH=~/.jupyter-age/python/${PYTHON_VERSION}/bin:$PATH 
-mkdir -p $PYTHONUSERBASE
+mkdir -p \$PYTHONUSERBASE
 pip3 install jupyter jupyterlab --user
 mkdir ~/.jupyter-age/ssl_cert && cd ~/.jupyter-age/ssl_cert
 openssl genrsa -out jupyter.key 2048
