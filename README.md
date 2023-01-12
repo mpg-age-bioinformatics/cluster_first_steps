@@ -878,5 +878,3 @@ cd ; srun -c 2 rstudio-age
 ```
 
 For using VS Code over `ssh` you can do so using the Remote Development extension pack and following the instrucions [here](https://code.visualstudio.com/docs/remote/ssh).
-
-.
