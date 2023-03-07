@@ -877,4 +877,6 @@ B) for `rstudio-server`,
 cd ; srun -c 2 rstudio-age
 ```
 
+More information on the rstudio image can be found [here](https://rocker-project.org/images/versioned/rstudio.html). For pulling images please follow the instructions above on Singularity. More on running docker images on your laptop can be found on our Jupyter on docker [presentation](https://github.com/mpg-age-bioinformatics/mpg-age-bioinformatics.github.io/blob/master/tutorials/reproducible_multilang_workflows_with_jupyter_on_docker.pdf). An example on a Dockerfile with added libraries to the running docker image can be found [here](https://github.com/mpg-age-bioinformatics/software/blob/main/rstudio/4.2.2-1/Dockerfile).
+
 For using VS Code over `ssh` you can do so using the Remote Development extension pack and following the instrucions [here](https://code.visualstudio.com/docs/remote/ssh).
