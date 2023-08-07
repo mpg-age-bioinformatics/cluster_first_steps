@@ -32,26 +32,13 @@ An introduction to HPC and SLURM can be found [here](http://github.com/mpg-age-b
 Once you have been given access you can login to one of the 2 head nodes with:
 
 ```bash
-ssh -XY UName@c3po
+ssh -XY UName@hpc.bioinformatics.studio
 ```
 
-or
+If the hpc node is not available, use:
 
 ```bash
-ssh -XY UName@r2d2
-```
-
-Please note that while `amalia` is a virtual machine (with 8 cores, 32 GB RAM, no infiniband connection, and no X forwarding)
-`r2d2` is a blade node (with 40 cores, 250 GB RAM, infiniband network, and X forwarding).
-
-The first time you login you should download the following `.bashrc` and `.bash_profile` and source them:
-
-```bash
-cd ~
-wget https://raw.githubusercontent.com/mpg-age-bioinformatics/cluster_first_steps/master/.bashrc
-wget https://raw.githubusercontent.com/mpg-age-bioinformatics/cluster_first_steps/master/.bash_profile
-source .bashrc
-source .bash_profile
+ssh -XY UName@hpc-login.bioinformatics.studio
 ```
 
 --- 
@@ -107,11 +94,9 @@ scontrol update job <job id> partition=<partition1>,<partition2>,<partition3>
 scontrol update job <job id> partition=<partition1>,<partition2>,<partition3> nodelist=<node list>
 ```
 
-Submissions wihtout arguments specifications will result in `-p hooli --cpus-per-task=2` and a time limit of 2 weeks.
+Submissions wihtout arguments specifications will result in `-p cluster` and a time limit of 2 weeks.
 
-For large job submissions please use the **hooli** partition.
-
-Feel free to use all partitions (ie. also the **bighead** partition) for large job submissions as well provided you can easely make these partition free on request of other users (eg. if you are submiting short jobs this should be easely achievable by using `sview` to modify the target partitions of your jobs).
+Feel free to use all partitions (ie. **cluster** and **dedicated** partition) for large job submissions.
 
 When submitin jobs with `sbatch` you can also include SLURM parameters inside the script ie.:
 ```
@@ -125,6 +110,29 @@ When submitin jobs with `sbatch` you can also include SLURM parameters inside th
 <code>
 ```
 and then run the script with `sbatch <script>`.
+
+
+Following is an example of managing large number of jobs to prevent overloading the cluster. It is recommended to limit the number of simultaneously running jobs.
+```
+#!/bin/bash
+cd ~/project/raw_data
+for f in $(ls *.fastq);
+   do  rm ~/project/slurm_logs/${f}.*.out
+
+   # wait if the running jobs exceed the limit
+   while [  `squeue –u username | wc –l` -gt "500" ];
+      do echo "sleeping"; sleep 300
+   done
+
+   sbatch --cpus-per-task=18 --mem=15gb --time=5-24 \
+   -p cluster -o ~/project/slurm_logs/${f}.%j.out ~/project/tmp/${f}.sh << EOF
+   #!/bin/bash
+   # necessary operations
+   EOF
+
+done
+exit
+```
 
 --- 
 
