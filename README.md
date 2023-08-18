@@ -44,18 +44,22 @@ ssh -XY <username>@hpc-login.bioinformatics.studio
 
 SLURM (Simple Linux Utility for Resource Management) is an open-source workload manager and job scheduler used primarily in high-performance computing (HPC) environments. It manages and schedules tasks across a cluster of computers, optimizing resource utilization and maximizing throughput.
 
-###Basic SLURM Concepts
+### Basic SLURM Concepts
 
 **Jobs**
+
 A job is a unit of work submitted to SLURM for execution. It can consist of one or more tasks, where each task is a process or a thread running on a node.
 
 **Partitions**
+
 Partitions (also known as queues) are groups of nodes with similar characteristics, such as CPU type, memory, or GPU availability. Jobs can be submitted to  specific partitions based on the requirements. There are two partitions available in `hpc bioinformatics studio`: `cluster` and `dedicated`, where `cluster` is the default partition. Each node in `cluster` partition consists of 20 cores and 70GB RAM, where worker nodes in `dedicated` partition are with 32 cores and 960GB RAM.
 
 **Nodes**
+
 Nodes are individual computers in the cluster that execute jobs. Each node has its own set of resources, such as CPUs and memory.
 
 **Resources**
+
 SLURM manages and allocates resources for jobs based on user requirements. This includes CPU cores, memory, and other hardware resources.
 
 ### SLURM Commands
@@ -88,10 +92,10 @@ Where `script.sh` is the shell script containing the commands you want to execut
 
 Common options:
 
-`-p <partition>`: Specify the partition/queue for the job.
-`-n <tasks>`: Number of tasks in the job.
-`--cpus-per-task=<cores>`: Specify the number of CPU cores per task.
-`--mem=<memory>`: Request memory for the job.
+- `-p <partition>`: Specify the partition/queue for the job.
+- `-n <tasks>`: Number of tasks in the job.
+- `--cpus-per-task=<cores>`: Specify the number of CPU cores per task.
+- `--mem=<memory>`: Request memory for the job.
 
 Example with options
 ```bash
@@ -170,8 +174,8 @@ squeue [options]
 
 Common options:
 
-`-u <username>`: Show jobs for a specific user.
-`-p <partition>`: Show jobs in a specific partition.
+- `-u <username>`: Show jobs for a specific user.
+- `-p <partition>`: Show jobs in a specific partition.
 
 **`scontrol`: Controlling Jobs**
 
