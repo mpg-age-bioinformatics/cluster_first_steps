@@ -24,74 +24,78 @@
 
 ## General
 
-If you would like to get access to the local cluster at the MPI-AGE
-please mail bioinformatics@age.mpg.de.
-
-An introduction to HPC and SLURM can be found [here](http://github.com/mpg-age-bioinformatics/mpg-age-bioinformatics.github.io/blob/master/tutorials/RemoteServers.pdf).
+If you would like to get access to the hpc cluster at the MPI-AGE please mail bioinformatics@age.mpg.de.
 
 Once you have been given access you can login to one of the 2 head nodes with:
 
 ```bash
-ssh -XY UName@hpc.bioinformatics.studio
+ssh -XY <username>@hpc.bioinformatics.studio
 ```
 
 If the hpc node is not available, use:
 
 ```bash
-ssh -XY UName@hpc-login.bioinformatics.studio
+ssh -XY <username>@hpc-login.bioinformatics.studio
 ```
 
 --- 
 
 ## SLURM, Simple Linux Utility for Resource Management 
 
+SLURM (Simple Linux Utility for Resource Management) is an open-source workload manager and job scheduler used primarily in high-performance computing (HPC) environments. It manages and schedules tasks across a cluster of computers, optimizing resource utilization and maximizing throughput.
+
+###Basic SLURM Concepts
+
+**Jobs**
+A job is a unit of work submitted to SLURM for execution. It can consist of one or more tasks, where each task is a process or a thread running on a node.
+
+**Partitions**
+Partitions (also known as queues) are groups of nodes with similar characteristics, such as CPU type, memory, or GPU availability. Jobs can be submitted to  specific partitions based on the requirements. There are two partitions available in `hpc bioinformatics studio`: `cluster` and `dedicated`, where `cluster` is the default partition. Each node in `cluster` partition consists of 20 cores and 70GB RAM, where worker nodes in `dedicated` partition are with 32 cores and 960GB RAM.
+
+**Nodes**
+Nodes are individual computers in the cluster that execute jobs. Each node has its own set of resources, such as CPUs and memory.
+
+**Resources**
+SLURM manages and allocates resources for jobs based on user requirements. This includes CPU cores, memory, and other hardware resources.
+
+### SLURM Commands
+
+**`sinfo`: Cluster Information**
+
+View partition information
 ```bash
-# show the partitions 
 sinfo 
+``` 
 
-# show information on nodes 
+Show information of nodes
+```bash
+sinfo -N
 sinfo -N -O partitionname,nodehost,cpus,cpusload,freemem,memory
+```
 
-# show the queue
-squeue 
+Show information about nodes with a specific state (e.g., idle, alloc, mix, etc.)
+```bash
+sinfo -t <node_state>
+```
 
-# show the queue for a user
-squeue -u <user name>
+**`sbatch`: Submitting Jobs**
 
-# show information on a job
-scontrol show job <job id>
+Submit jobs to SLURM
+```bash
+sbatch [options] script.sh
+```
+Where `script.sh` is the shell script containing the commands you want to execute.
 
-# show information on a partition
-scontrol show partition <parition name>
+Common options:
 
-# show information on a node
-scontrol show node <node name>
+`-p <partition>`: Specify the partition/queue for the job.
+`-n <tasks>`: Number of tasks in the job.
+`--cpus-per-task=<cores>`: Specify the number of CPU cores per task.
+`--mem=<memory>`: Request memory for the job.
 
-# start and interactive bash session
-srun --pty bash
-
-# submit a job
-sbatch -p <partition> --cpus-per-task=<n cpus> --mem=<n>gb -t <hours>:<minutes>:<seconds> -o <stdout file> <script>  
-
-# submit a job3 after job1 and job2 are successfully ready
-job1=$(sbatch --parsable <script1>)
-job2=$(sbatch --parsable <script2>)
-sbatch -d afterok:${job1}:${job2} <script3>
-
-# attach to a running job and run a command
-srun --jodib <JOBID> --pty <command>
-
-# cancel a job
-scancel <job id>
-
-# cancel all jobs for user
-scancel -u <user name>
-
-# change the partitions of a pending job
-scontrol update job <job id> partition=<partition1>,<partition2>,<partition3>
-
-# change the partition and reserved nodes where node list has the form bioinf-blc-[02,27-28]
-scontrol update job <job id> partition=<partition1>,<partition2>,<partition3> nodelist=<node list>
+Example with options
+```bash
+sbatch -p <partition> --cpus-per-task=<n cpus> --mem=<n>gb -t <hours>:<minutes>:<seconds> -o <stdout file> <script>
 ```
 
 Submissions wihtout arguments specifications will result in `-p cluster` and a time limit of 2 weeks.
@@ -99,7 +103,7 @@ Submissions wihtout arguments specifications will result in `-p cluster` and a t
 Feel free to use all partitions (ie. **cluster** and **dedicated** partition) for large job submissions.
 
 When submitin jobs with `sbatch` you can also include SLURM parameters inside the script ie.:
-```
+```bash
 #!/bin/bash
 #SBATCH -p <partition> 
 #SBATCH --cpus-per-task=<n cpus> 
@@ -111,9 +115,8 @@ When submitin jobs with `sbatch` you can also include SLURM parameters inside th
 ```
 and then run the script with `sbatch <script>`.
 
-
-Following is an example of managing large number of jobs to prevent overloading the cluster. It is recommended to limit the number of simultaneously running jobs.
-```
+Following is an example of managing large number of jobs to prevent overloading the cluster. It is strongly recommended to limit the number of simultaneously running jobs.
+```bash
 #!/bin/bash
 cd ~/project/raw_data
 for f in $(ls *.fastq);
@@ -132,6 +135,86 @@ for f in $(ls *.fastq);
 
 done
 exit
+```
+
+Dependencies and Job Chains: e.g. submit a job3 after job1 and job2 are successfully ready
+```bash
+job1=$(sbatch --parsable <script1>)
+job2=$(sbatch --parsable <script2>)
+sbatch -d afterok:${job1}:${job2} <script3>
+```
+
+**`srun`: Launch Task and Interactive Session**
+
+Start an interactive bash session
+```bash
+srun --pty bash
+```
+
+Attach to a running job and run a command
+```bash
+srun --jodib <job_id> --pty <command>
+```
+
+**`squeue`: Checking Queue Status**
+
+Show the queue information
+```bash
+squeue
+```
+
+Queue infromation with option
+```bash
+squeue [options]
+```
+
+Common options:
+
+`-u <username>`: Show jobs for a specific user.
+`-p <partition>`: Show jobs in a specific partition.
+
+**`scontrol`: Controlling Jobs**
+
+Show detailed information about a job
+```bash
+scontrol show job <job_id>
+```
+
+Show information about a partition
+```bash
+scontrol show partition <parition_name>
+```
+
+Show information about a node
+```bash
+scontrol show node <node_name>
+```
+
+Hold a job
+```bash
+scontrol hold <job_id>
+```
+
+Release a job
+```bash
+scontrol release <job_id>
+```
+
+Change the partitions preference of a pending job
+```bash
+scontrol update job <job id> partition=<partition1>,<partition2>,<partition3>
+```
+
+Change the partition and reserved specific nodes
+```bash
+scontrol update job <job id> partition=<partition1>,<partition2>,<partition3> nodelist=<node list>
+```
+
+**`scancel`: Cancelling Jobs**
+
+Cancel a job
+```bash
+scancel <job_id>
 ```
 
 --- 
