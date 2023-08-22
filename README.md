@@ -223,199 +223,9 @@ scancel <job_id>
 
 --- 
 
-## Environment Modules Project
-
-A centralized software system.
-The modules system loads software (version of choice) and changes environment 
-variables (eg. LD_LIBRARY_PATH).
-
-```bash
-# show available modules
-module avail			
-
-# show a description of the SAMtools module
-module whatis SAMtools	
-
-# show environment changes for SAMtools
-module show SAMtools
-
-# load SAMtools
-module load SAMtools		
-
-# list all loaded modules
-module list	  
-
-# unload the SAMtools module
-module unload SAMtools	
-
-# unload all loaded modules
-module purge  			
-```
-Jupyterhub and R-Studio Server are using the R version 3.3.2 from the module environment. For this you have to `source /software/2017/age-bioinformatics.2017.only.rc` and `module load rlang`.
-
---- 
-
-## Shifter
-
-<details><summary>Shifter has been deprecated. Please use Singularity instead. Click here if you want to know more.</summary> 
-<p>
-
-*! This sechtion is under development - please contact us if you wish to use Shifter !*
-
-Shifter enables container images for HPC. In a nutshell, Shifter allows an HPC system to efficiently and safely allow end-users to run a [docker](http://www.docker.com) image.
-
-**What is a Container?**
-Containers are a way to package software in a format that can run isolated on a shared operating system. Unlike VMs (Virtual Machines), containers do not bundle a full operating system - only libraries and settings required to make the software work are needed. This makes for efficient, lightweight, self-contained systems and guarantees that software will always run the same, regardless of where it’s deployed. (source: [docker.com](http://www.docker.com)).
-
-An introduction to docker and how to generate your own images can be found [here](http://github.com/mpg-age-bioinformatics/mpg-age-bioinformatics.github.io/blob/master/tutorials/reproducible_multilang_workflows_with_jupyter_on_docker ). More information on how to build docker images and best practices for writing Dockerfiles can be found [here](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/) and [here](https://docs.docker.com/engine/reference/builder/), respectively.
-
-```
-# load the required module
-module load shifter
-
-# Pull and image (administrators only)
-shifterimg pull docker/ubuntu:15.10
-
-# List available images (administrators only)
-shifterimg images
-
-# List available images (all)
-shifterls
-
-# Get an interactive shell and check you are in the intended image
-shifter --image=ubuntu:15.10 bash -login
-cat /etc/lsb-release 
-```
-You expect to see the following output:
-```
-DISTRIB_ID=Ubuntu
-DISTRIB_RELEASE=15.10
-DISTRIB_CODENAME=wily
-DISTRIB_DESCRIPTION="Ubuntu 15.10"
-```
-You can also use it with SLURM. Consider the folowing script named `shifter.test.sh`:
-```
-#!/bin/bash
-#SBATCH -o shifter.out
-
-shifter --image=docker:ubuntu:15.10 cat /etc/lsb-release
-```
-Now run it (ie. `sbatch shifter.test.sh`) and check the contents of `shifter.out`.
-
-Please visit our software_docker [page](https://github.com/mpg-age-bioinformatics/software_docker#software-container) if you wish to use the image containing all software currently in use `mpgagebioinformatics/bioinformatics_software`.
-
-Attention, you might need to:
-```bash
-unset PYTHONHOME PYTHONUSERBASE PYTHONPATH 
-module unload rlang
-```
-before running `shifter`. This is automaticaly done when running the `mpgagebioinformatics/bioinformatics_software` if you use the `.bashrc` provided above.
-
-**Running a script with shifter using the `mpgagebioinformatics/bioinformatics_software` image:**
-
-- example script: `test.sh`
-```bash
-#!/bin/bash
-source ~/.bashrc
-
-module load rlang python
-
-which python
-
-python << EOF
-print "This is python"
-EOF
-
-which R
-
-Rscript -e "print('This is R')"
-```
-- running the script
-```bash
-chmod +x test.shifter.sh
-shifter \
-    --image=mpgagebioinformatics/bioinformatics_software:v1.0.1 \   
-    ./test.sh
-```
-
-**Running a script over shifter on slurm:**
-
-- example script: `test.slurm.sh`
-```bash
-#!/bin/bash
-#SBATCH --cpus-per-task=18
-#SBATCH --mem=15gb
-#SBATCH --time=5-24 
-#SBATCH -p hooli
-#SBATCH -o test.shifter.out
-
-shifter –-image=mpgagebioinformatics/bioinformatics_software:v1.0.1 /bin/bash << SHI
-#!/bin/bash
-
-source ~/.bashrc 
-
-module load rlang python
-
-which python
-
-python << EOF
-print "This is python"
-EOF
-
-which R
-
-Rscript -e "print('This is R')"
-
-SHI
-```
-- running the script over slurm
-```bash
-chmod +x test.slurm.sh
-sbatch test.slurm.sh
-```
-- check the output
-```bash
-cat test.shifter.out
-```
-
-**Example for automation over a batch of jobs:**
-
-- example script: `automation.slurm.shifter.sh`
-```bash
-#!/bin/bash
-cd ~/project/raw_data			
-for f in $(ls *.fastq); 
-   do  rm ~/project/slurm_logs/${f}.*.out
-
-   sbatch --cpus-per-task=18 --mem=15gb --time=5-24 \
-   -p blade -o ~/project/slurm_logs/${f}.%j.out <<EOF
-#!/bin/bash
-shifter –-image=mpgagebioinformatics/bioinformatics_software:v1.0.1 /bin/bash << SHI	
-#!/bin/bash
-source ~/.bashrc 
-module load bwa
-cd ~/project/raw_data			
-bwa mem –T 18 ${f}	
-SHI			
-EOF
-
-done			
-exit
-```
-- running the script
-```bash
-chmod +x automation.slurm.shifter.sh
-./automation.slurm.shifter.sh
-```
-
-</p>
-</details>
-	
---- 
-
 ## Singularity
 
-Like Shifter, Singularity enables container images for HPC. In a nutshell, Singularity allows end-users to efficiently and safely run a docker image in an HPC system.
+Singularity (also known as Apptainer) enables container images for HPC. In a nutshell, Singularity allows end-users to efficiently and safely run a docker image in an HPC system.
 
 An introduction to docker and how to generate your own images can be found [here](http://github.com/mpg-age-bioinformatics/mpg-age-bioinformatics.github.io/blob/master/tutorials/reproducible_multilang_workflows_with_jupyter_on_docker ). More information on how to build docker images and best practices for writing Dockerfiles can be found [here](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/) and [here](https://docs.docker.com/engine/reference/builder/), respectively.
 
@@ -602,66 +412,33 @@ chmod +x automation.slurm.singularity.sh
 
 --- 
 
-## Databases and reference genomes
+## Environment Modules Project
 
-We mantain a variety of databases and indexed genomes. Please contact us if you would require any database to be updated, genome reference added, or additional support on this.
-
-```bash
-cluster:/beegfs/common/databases$ tree -L 1
-.
-├── BLAST
-├── DATABASE_VERSION_LIST
-├── GOMo
-├── hmdb
-├── miR_targets
-├── Motif
-├── MSigDB
-├── new
-├── Pfam
-├── README
-├── SequencingAdapters
-├── SwissProt
-└── UniRef90
-```
-```bash
-cluster:/beegfs/common/genomes$ tree -L 2
-.
-├── adapters
-│   ├── All.fasta
-│   └── TruSeqAdapters.txt
-├── caenorhabditis_elegans
-│   ├── 83
-│   ├── 85
-│   ├── WBcel235_79
-│   ├── WBcel235_80
-│   └── WBcel235_81
-├── drosophila_melanogaster
-│   ├── 83
-│   ├── BDGP6_80
-│   └── BDGP6_81
-├── homo_sapiens
-│   ├── 83
-│   ├── GRCh38_80
-│   └── GRCh38_81
-├── mus_musculus
-│   ├── 83
-│   ├── GRCm37_mm9
-│   ├── GRCm38_79
-│   ├── GRCm38_80
-│   └── GRCm38_81
-└── saccharomyces_cerevisiae
-    ├── 82
-    └── 83
-```
+A centralized software system.
+The modules system loads software (version of choice) and changes environment 
+variables (eg. LD_LIBRARY_PATH).
 
 ```bash
-cluster:..mmon/genomes/homo_sapiens/83$ ls
-alt_bowtie2      alt_tophat2_cuffcompare      original.abinitio.gtf              original.toplevel.fa      primary_assembly_star_2.4.1d          toplevel_bwa
-alt_bwa          BUILD_GRCh38_RELEASE_83      original.alt.fa                    original.toplevel.fa.fai  primary_assembly_tophat2              toplevel_hisat
-alt_hisat        chromosomes                  original.chr.gtf                   primary_assembly_bowtie2  primary_assembly_tophat2_cuffcompare  toplevel_hisat2
-alt_hisat2       cuffcompare.gtf              original.chr_patch_hapl_scaff.gtf  primary_assembly_bwa      README_fa                             toplevel_star_2.4.1d
-alt_star_2.4.1d  cuffcompare.results.tar.bz2  original.gtf                       primary_assembly_hisat    README_gtf                            toplevel_tophat2
-alt_tophat2      log                          original.primary_assembly.fa       primary_assembly_hisat2   toplevel_bowtie2                      toplevel_tophat2_cuffcompare
+# show available modules
+module avail			
+
+# show a description of the SAMtools module
+module whatis SAMtools	
+
+# show environment changes for SAMtools
+module show SAMtools
+
+# load SAMtools
+module load SAMtools		
+
+# list all loaded modules
+module list	  
+
+# unload the SAMtools module
+module unload SAMtools	
+
+# unload all loaded modules
+module purge  			
 ```
 
 --- 
@@ -765,64 +542,6 @@ sshfs JDoe@c3po.age.mpg.de:/beegfs/group_XX ~/cluster_mount
 
 --- 
 
-## RStudio-server
-
-An RStudio-server connected to the HPC shared file system is available on [https://rstudio.age.mpg.de](https://rstudio.age.mpg.de).
-
-If you got notes like ```note: use option -std=c99 or -std=gnu99 to compile your code``` during installation of R-Modules, please create the files ~/.R/Makevars and ~/.R/3.5.1/Makevars with the content ```CC = gcc -std=c99``` 
-
-**Running R-Studio images over the terminal on the server**
-
-This section describes how to reproduce the R-Studio environment in [https://rstudio.age.mpg.de](https://rstudio.age.mpg.de) on the terminal.
-
-Eg. R-3.6.3
-
-```
-amaliax:~$ singularity exec /beegfs/common/singularity/r.3.6.3.sif /bin/bash
-amaliax:~$ which R
-/usr/local/bin/R
-amaliax:~$ R
- > .libPaths()
-[1] "/beegfs/group_bit/home/JBoucas/.R/3.6.3/R_LIBS_USER"
-[2] "/usr/local/lib/R/site-library"                      
-[3] "/usr/local/lib/R/library" 
-```
-
-**Running R-Studio images on your laptop**
-
-This section describes how to reproduce the R-Studio installation in [https://rstudio.age.mpg.de](https://rstudio.age.mpg.de) on your local laptop.
-
-```
-$ mkdir -p ~/r-age/3.6.3
-$ docker run -d -p 8787:8787 -v ~/rstudio-age/:/home/rstudio --name rstudio -e PASSWORD=yourpasswordhere mpgagebioinformatics/rstudio-age:3.6.3
-```
-You can now access rstudio over http://localhost:8787 username: `rstudio` password: `yourpasswordhere` .
-
-If you wish to run R from the terminal instead you can:
-```
-$ docker exec --user rstudio -it rstudio R
-```
-
-For installing system libraries as root:
-```
-$ docker exec -it rstudio /bin/bash
-```
-Please realise that system libraries will be gone once the container is removed.
-
-Stopping the container:
-```
-$ docker stop rstudio
-```
-
-Rmoving the container:
-```
-$ docker rm rstudio
-```
-
-The folders `/beegfs/group_bit/home/<username>/.R/3.6.3/R_LIBS_USER` in amalia are homologous to `~/r-age/3.6.3` in your laptop. You can copy or `rsync` both folders if you want to use libraries accross machines.
-
---- 
-
 ## JupyterHub
 
 A JupyterHub connected to the HPC shared file system is available on [https://jupyterhub.age.mpg.de](https://jupyterhub.age.mpg.de).
@@ -883,95 +602,3 @@ r2d2:~$ singularity exec /beegfs/common/singularity/jupyter.2.0.0.sif /bin/bash
 ```
 
 If you are using our latest instance of JupyterHub - jupyterhub-test.age.mpg.de - please check the respective [README](https://github.com/mpg-age-bioinformatics/jupyterhub/tree/master/3.0.0).
-
---- 
-
-## DockerHub
-Using our Dockerhub for docker images wich should not be public available.
-
-Go to https://hub.age.mpg.de and login with your LDAP credentials.
-
-**Namespaces**
-
-Namespaces are like sub folders for the URL where the docker repositorys are in.
-Namespaces do have Access rights. You see these rights right beside the Name under Namespaces.
-- The lock means only explicit users can access
-- Group means all logged in users can access
-- Globe means it is shared with the whole world
-
-So you have your personal namespace and you can create new namespaces for special teams and access rights.
-Bevor creating namespaces you need a team where you are in and can add members.
-
-The URLs for your Images will look like this: hub.age.mpg.de/namespace/image:version
-
-So in case of a user this could be: hub.age.mpg.de/drosskopp/debian:jessie
-
-You can use these URLs with docker and shifterimg
-
-**Teams**
-
-Under teams you can create such and add users to use these for the rights of namespaces.
-
-**Application Tokens**
-
-If you klick in the upper right on your name you can create applikation tokens.
-- PLEASE USE IT.
-This is important because if you use your password with the docker command or schifterimg it will be saved in your homefolder or on the serverside.
-- So klick: Create new token
-- Give it a predictive name
-- And use the token that appears after saving in the upper right corner for auth with docker or schifterimg commands
-
-**Use with docker**
-
-Now you can use Docker to push the first image.
-- If you dont have a own docker image, get one at docker.io
-```bash
-docker pull alpine:latest
-```
-Than Tag your Image for our registry
-```bash
-docker tag alpine:latest hub.age.mpg.de/drosskopp/anyname:version
-```
-- Login to our registry (use the application token you created)
-```bash
-docker login hub.age.mpg.de
-Username: DRosskopp 
-Password: 
-	Login Succeeded
-```
-- Now push your image and inspect it after under repositories in the interface
-```bash
-docker push hub.age.mpg.de/drosskopp/anyname:version
-```
-
---- 
-
-## Selfservice
-
-For running your own `jupyter lab` and `rstudio-server` from the HPC you will need to 
-
-```bash
-export PATH=/beegfs/common/cluster_first_steps:${PATH}
-```
-
-A) and then, for `jupyter lab`,
-
-```bash
-cd ; srun -c 2 jupyter-age
-```
- 
-for listing your running `jupyter` servers:
-
-```
-jupyter-age list
-```
-
-B) for `rstudio-server`,
-
-```bash
-cd ; srun -c 2 rstudio-age
-```
-
-More information on the rstudio image can be found [here](https://rocker-project.org/images/versioned/rstudio.html). For pulling images please follow the instructions above on Singularity. More on running docker images on your laptop can be found on our Jupyter on docker [presentation](https://github.com/mpg-age-bioinformatics/mpg-age-bioinformatics.github.io/blob/master/tutorials/reproducible_multilang_workflows_with_jupyter_on_docker.pdf). An example on a Dockerfile with added libraries to the running docker image can be found [here](https://github.com/mpg-age-bioinformatics/software/blob/main/rstudio/4.2.2-1/Dockerfile).
-
-For using VS Code over `ssh` you can do so using the Remote Development extension pack and following the instrucions [here](https://code.visualstudio.com/docs/remote/ssh).
