@@ -63,7 +63,7 @@ A job is a unit of work submitted to SLURM for execution. It can consist of one 
 
 **Partitions**
 
-Partitions (also known as queues) are groups of nodes with similar characteristics, such as CPU type, memory, or GPU availability. Jobs can be submitted to  specific partitions based on the requirements. There are two partitions available in `hpc bioinformatics studio`: `cluster` and `dedicated`, where `cluster` is the default partition. Each node in `cluster` partition consists of 20 cores and 70GB RAM, where worker nodes in `dedicated` partition are with 32 cores and 960GB RAM.
+Partitions (also known as queues) are groups of nodes with similar characteristics, such as CPU type, memory, or GPU availability. Jobs can be submitted to  specific partitions based on the requirements. There are two partitions available in `hpc bioinformatics studio`: `cluster` and `dedicated`, where `cluster` is the default partition.
 
 **Nodes**
 
