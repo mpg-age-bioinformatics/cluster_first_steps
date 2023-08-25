@@ -367,20 +367,20 @@ The Environment Modules Project is a centralized software system. The modules sy
 # show available modules
 module avail			
 
-# show a description of the SAMtools module
-module whatis SAMtools	
+# show a description of the samtools module
+module whatis samtools	
 
-# show environment changes for SAMtools
-module show SAMtools
+# show environment changes for samtools
+module show samtools
 
-# load SAMtools
-module load SAMtools		
+# load samtools
+module load samtools		
 
 # list all loaded modules
 module list	  
 
-# unload the SAMtools module
-module unload SAMtools	
+# unload the samtools module
+module unload samtools	
 
 # unload all loaded modules
 module purge  			
