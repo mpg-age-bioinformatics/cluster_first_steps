@@ -14,36 +14,27 @@
 
 ## Getting Started
 
-If you would like to get access to the hpc cluster at the MPI-AGE (`hpc.bioinformatics.studio
-`) please mail bioinformatics@age.mpg.de.
-
-In order to access the cluster, you need to be within the MPCDF (Max Planck Computing and Data Facility) network. One needs to have a user account in MPCDF ([MPCDF Registration](https://selfservice.mpcdf.mpg.de/index.php?r=registration) can be used for requesting an account, if you do not have one). Following is an example procedure to access MPCDF nodes.  
+In order to access the cluster, you will needs to have a user account at the Max Planck Computing and Data Facility - [MPCDF Registration](https://selfservice.mpcdf.mpg.de/index.php?r=registration). If you already have an MPCDF account and would like to access our HPC please mail us at bioinformatics@age.mpg.de.  
 
 **Login to MPCDF Access Nodes**
 
-For security reasons, direct login to the HPC system Raven is allowed only from within some MPG networks. Users from other locations have to login to one of the gateway systems first.
+For security reasons, direct login to the HPC system is allowed only from within the MPCDF network. Users from other locations have to login to one of the gateway systems first.
+
+From everywhere:
 
 ```bash
-ssh gate.mpcdf.mpg.de
+ssh <username>@gate.mpcdf.mpg.de
 ```
 
-Use `ssh` to connect to Raven:
+From the MPG network (when over at the institute or over VPN):
 
 ```bash
-ssh raven.mpcdf.mpg.de
+ssh <username>@raven.mpcdf.mpg.de
 ```
 
-You will be directed to one of the Raven login nodes (`raven01i`, `raven02i`). You have to provide your (Kerberos) password and an OTP on the Raven login nodes. SSH keys are not allowed.
+Where `<username>` is your MPCDF login.
 
-**Access `hpc.bioinformatics.studio`**
-
-Once you are inside MPCDF network, you can `ssh` to the access node.
-
-```bash
-ssh -XY <username>@hpc.bioinformatics.studio
-```
-
-or
+Once you have accessed one this systems you can access our HPC:
 
 ```bash
 ssh hpc.bioinformatics.studio
@@ -236,11 +227,11 @@ scancel <job_id>
 
 ## Singularity
 
-Singularity (also known as Apptainer) enables container images for HPC. In a nutshell, Singularity allows end-users to efficiently and safely run a docker image in an HPC system.
+Singularity/Apptainer (also known as Apptainer) enables container images for HPC. In a nutshell, Singularity allows end-users to efficiently and safely run a docker image in an HPC system.
 
 An introduction to docker and how to generate your own images can be found [here](https://github.com/mpg-age-bioinformatics/mpg-age-bioinformatics.github.io/blob/master/tutorials/reproducible_multilang_workflows_with_jupyter_on_docker.pdf). More information on how to build docker images and best practices for writing Dockerfiles can be found [here](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/) and [here](https://docs.docker.com/engine/reference/builder/), respectively.
 
-Singularity is available without loading a module from environment system. Images are loaded, converted and saved by the user. This means you can manage your images as files. Followings are some example operations.
+Singularity/Apptainer is directly available on our HPC (no neeed to load any module).
 
 Pull a docker image and convert to a Singularity image. The resulting Singularity image will contain the software and environment defined by the Docker image.
 ```bash
@@ -248,18 +239,11 @@ singularity pull bioinformatics_software.v4.0.2.sif  docker://index.docker.io/mp
 ```
 
 Launch an interactive Bash shell within the context of the specified Singularity image
-
 ```bash
 singularity exec bioinformatics_software.v4.0.2.sif /bin/bash
 ```
 
-Launch an interactive Bash shell within the context of already stored Singularity image
-```bash
-singularity exec /nexus/posix0/MAGE-flaski/service/images/bioinformatics_software.v4.0.2.sif /bin/bash
-singularity shell /nexus/posix0/MAGE-flaski/service/images/bioinformatics_software.v4.0.2.sif
-```
-
-Detailed documentation for Singularity is available [here](https://apptainer.org/user-docs/master/).
+Detailed documentation for Apptainer is available [here](https://apptainer.org/user-docs/master/).
 
 **Running a script with singularity using the `mpgagebioinformatics/bioinformatics_software` image:**
 
@@ -375,7 +359,9 @@ chmod +x automation.slurm.singularity.sh
 
 ## Environment Modules Project
 
-A centralized software system. The modules system loads software (version of choice) and changes environment variables (eg. LD_LIBRARY_PATH).
+Our `mpgagebioinformatics/bioinformatics_software` make use of the modules system to load and unload required software.
+
+The Environment Modules Project is a centralized software system. The modules system loads software (version of choice) and changes environment variables (eg. LD_LIBRARY_PATH).
 
 ```bash
 # show available modules
@@ -404,11 +390,17 @@ module purge
  
 ## Data
 
+Data can be accessed from our hpc.bioinformatics.studio as well as from raven.mpcdf.mpg.de : 
+
+```
+cd /nexus/posix0/MAGE-flaski/service/hpc/
+```
+
+There you will find a `home/<username>` folder to store your data and a `group/<group name>` to share data within your group.
+
 Data stored on the cluster is not backed up. Files will be deleted parmanently after being unused for 3 months. You are responsible for the backup of your data into a different file system.
 
-The clients needs to be able to use `scp`, which means secure copy, pointing that your files are crypted during the copy process. We would recommend using filezilla. This Gui is available most known Operating systems, like Windows, Linux or OS-X (if you have a MAC).
-
-**Use of `scp`**
+The clients needs to be able to use `scp`, which means secure copy, pointing that your files are crypted during the copy process. We would recommend using filezilla. This Gui is available most known Operating systems, like Windows, Linux or OS-X (if you have a MAC). Alternatively you can use `rsync` or modern file transfer tools that make use of the same file transfer protocols.
 
 ```bash
 # on the server side
