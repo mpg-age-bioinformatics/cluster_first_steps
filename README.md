@@ -390,13 +390,26 @@ module purge
  
 ## Data
 
-Data can be accessed from our hpc.bioinformatics.studio as well as from raven.mpcdf.mpg.de : 
+Data can be accessed from our `hpc.bioinformatics.studio` as well as from `raven.mpcdf.mpg.de` : 
 
 ```
 cd /nexus/posix0/MAGE-flaski/service/hpc/
 ```
 
 There you will find a `home/<username>` folder to store your data and a `group/<group name>` to share data within your group.
+
+From `raven.mpcdf.mpg.de`  you will be able to transfer your data to `/raven/ptmp` (also efemeral) eg.:
+
+```
+rsync -rtvh /nexus/posix0/MAGE-flaski/service/hpc/raven/group/<group>/<folder> /raven/ptmp/<user>/
+```
+or to the archvie file system:
+
+```
+rsync -rtvh /nexus/posix0/MAGE-flaski/service/hpc/raven/group/<group>/<folder> /r/<username first letter>/<user>/
+```
+
+For more information on the `/raven/ptmp` and archive `/r` please consult MPCDF's [documentation](https://docs.mpcdf.mpg.de/doc/computing/raven-user-guide.html#file-systems).
 
 Data stored on the cluster is not backed up. Files will be deleted parmanently after being unused for 3 months. You are responsible for the backup of your data into a different file system.
 
