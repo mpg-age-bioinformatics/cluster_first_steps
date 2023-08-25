@@ -320,8 +320,11 @@ cat test.singularity.out
 ```
 
 > /modules/software/python/2.7.15/bin/python
+> 
 > This is python
+>
 > /modules/software/rlang/3.5.1/bin/R
+>
 > [1] "This is R"
 
 
