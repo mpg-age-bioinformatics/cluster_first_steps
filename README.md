@@ -10,6 +10,8 @@
 
 [Data](#data)
 
+[Remove Visualization Services](#remove-visualization-services)
+
 [Support](#support)
 
 ## Getting Started
@@ -425,6 +427,12 @@ scp </path/to/file> <username>@<address>:~/path/to/file
 # on your client side
 scp <username>@<address>:</path/to/file> ~/path/to/file
 ```
+
+---
+
+## Remove Visualization Services
+
+For remote visualization services please consult MPCDF's [documentation](https://docs.mpcdf.mpg.de/doc/visualization/index.html) and previuous training [slides](https://datashare.mpcdf.mpg.de/s/iYB7xA8FN4igkxW).
 
 ---
 
