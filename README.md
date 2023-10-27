@@ -432,7 +432,7 @@ scp <username>@<address>:</path/to/file> ~/path/to/file
 
 ## Remove Visualization Services
 
-For remote visualization services please consult MPCDF's [documentation](https://docs.mpcdf.mpg.de/doc/visualization/index.html) and previuous training [slides](https://datashare.mpcdf.mpg.de/s/iYB7xA8FN4igkxW).
+For remote visualization services please consult MPCDF's [documentation](https://docs.mpcdf.mpg.de/doc/visualization/index.html) and previous training [slides](https://datashare.mpcdf.mpg.de/s/iYB7xA8FN4igkxW).
 
 ---
 
