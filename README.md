@@ -404,12 +404,12 @@ There you will find a `home/<username>` folder to store your data and a `group/<
 From `raven.mpcdf.mpg.de`  you will be able to transfer your data to `/raven/ptmp` (also efemeral) eg.:
 
 ```
-rsync -rtvh /nexus/posix0/MAGE-flaski/service/hpc/raven/group/<group>/<folder> /raven/ptmp/<user>/
+rsync -rtvh /nexus/posix0/MAGE-flaski/service/hpc/group/<group>/<folder> /raven/ptmp/<user>/
 ```
-or to the archvie file system:
+or to the archive file system:
 
 ```
-rsync -rtvh /nexus/posix0/MAGE-flaski/service/hpc/raven/group/<group>/<folder> /r/<username first letter>/<user>/
+rsync -rtvh /nexus/posix0/MAGE-flaski/service/hpc/group/<group>/<folder> /r/<username first letter>/<user>/
 ```
 
 For more information on the `/raven/ptmp` and archive `/r` please consult MPCDF's [documentation](https://docs.mpcdf.mpg.de/doc/computing/raven-user-guide.html#file-systems).
