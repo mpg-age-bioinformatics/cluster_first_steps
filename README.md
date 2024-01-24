@@ -161,7 +161,7 @@ srun --pty bash
 
 Attach to a running job and run a command
 ```bash
-srun --jodid <job_id> --pty <command>
+srun --jobid <job_id> --pty <command>
 ```
 
 **`squeue`: Checking Queue Status**
