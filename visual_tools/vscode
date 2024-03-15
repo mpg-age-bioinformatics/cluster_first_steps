@@ -1,0 +1,72 @@
+#!/bin/sh
+#SBATCH --time=08:00:00
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=8192
+#SBATCH --output=vscode.job.%j
+
+VSCODE_IMAGE="/nexus/posix0/MAGE-flaski/service/images/vscode_ubuntu.sif"
+
+# Create temporary directory to be populated with directories to bind-mount in the container
+# where writable file systems are necessary. Adjust path as appropriate for your computing environment.
+mkdir -p ~/.vscode-age/tmp
+workdir=$(python3 -c 'import tempfile; import os; HOME=os.getenv("HOME"); print(tempfile.mkdtemp(prefix=f"{HOME}/.vscode-age/tmp/"))')
+
+# echo $workdir
+
+mkdir -p -m 700 ${workdir}/run ${workdir}/tmp
+
+export APPTAINER_BIND="${workdir}/run:/run,${workdir}/tmp:/tmp"
+
+export APPTAINERENV_USER=$(id -un) 
+export APPTAINERENV_VSPASSWORD=$(openssl rand -base64 15)
+
+# get unused socket per https://unix.stackexchange.com/a/132524
+# tiny race condition between the python & singularity commands
+readonly PORT=$(python3 -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
+
+cat > ${workdir}/config.yaml <<END
+bind-addr: 0.0.0.0:${PORT}
+auth: password
+password: ${APPTAINERENV_VSPASSWORD}
+cert: false
+END
+
+NODEIP=$(hostname -I | grep -Eo '192\.168\.42\.[0-9]+')
+
+cat 1>&2 <<END
+
+ATTENTION: VS Code only provides unencrypted HTTP access.
+
+1. Run from local computer: ssh -N -L 8080:${NODEIP}:${PORT} -J ${APPTAINERENV_USER}@raven.mpcdf.mpg.de ${APPTAINERENV_USER}@hpc.bioinformatics.studio
+   and point your web browser to http://localhost:8080
+
+2. log in to VS Code using the following credentials:
+
+   password: ${APPTAINERENV_VSPASSWORD}
+
+When done using VS Code, terminate the job by:
+
+1. End the ssh port tunneling from the local computer terminal
+END
+
+if [ "${SLURM_JOB_ID}" = "" ] ; then
+cat 1>&2 <<END   
+      
+END
+else
+cat 1>&2 <<END
+
+2. Issue the following command on the login node:
+
+      scancel -f ${SLURM_JOB_ID}
+      
+END
+fi
+
+singularity exec --cleanenv ${VSCODE_IMAGE} \
+    code-server --disable-update-check \
+        --config=${workdir}/config.yaml \
+        --welcome-text="Get the password from the job output!" >/dev/null 2>&1
+
+printf 'vs code exited' 1>&2

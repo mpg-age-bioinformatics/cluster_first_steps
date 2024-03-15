@@ -59,4 +59,4 @@ singularity exec --cleanenv ${JUPYTERNB_IMAGE} \
         --NotebookApp.token=${APPTAINERENV_NBTOKEN} \
         --port=${PORT} >/dev/null 2>&1
 
-printf 'rserver exited' 1>&2
+printf 'jupyter notebook exited' 1>&2

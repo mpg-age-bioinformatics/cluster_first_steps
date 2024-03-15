@@ -59,4 +59,4 @@ singularity exec --cleanenv ${JUPYTERLAB_IMAGE} \
         --NotebookApp.token=${APPTAINERENV_LABTOKEN} \
         --port=${PORT} >/dev/null 2>&1
 
-printf 'rserver exited' 1>&2
+printf 'jupyter lab exited' 1>&2
