@@ -3,23 +3,20 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=8192
-#SBATCH --output=jupyterlab.job.%j
+#SBATCH --output=posit-jupyter.job.%j
 
-JUPYTERLAB_IMAGE="/nexus/posix0/MAGE-flaski/service/images/rw_jupyter_ubuntu2204.sif"
+POSIT_JUPYTER_IMAGE="/nexus/posix0/MAGE-flaski/service/images/posit-latest.sif"
 
-# Create temporary directory to be populated with directories to bind-mount in the container
+# Create directory to be populated with directories to bind-mount in the container
 # where writable file systems are necessary. Adjust path as appropriate for your computing environment.
-mkdir -p ~/.jupyterlab-age/tmp
-workdir=$(python3 -c 'import tempfile; import os; HOME=os.getenv("HOME"); print(tempfile.mkdtemp(prefix=f"{HOME}/.jupyterlab-age/tmp/"))')
-
-# echo $workdir
-
-mkdir -p -m 700 ${workdir}/run ${workdir}/tmp
+workdir=$(eval echo ~/.posit-jupyter-age)
+mkdir -p $workdir
+mkdir -p -m 700 $workdir/tmp $workdir/run
 
 export APPTAINER_BIND="${workdir}/run:/run,${workdir}/tmp:/tmp"
 
 export APPTAINERENV_USER=$(id -un) 
-export APPTAINERENV_LABTOKEN=$(openssl rand -base64 15)
+export JUPYTER_LABTOKEN=$(openssl rand -base64 15)
 
 # get unused socket per https://unix.stackexchange.com/a/132524
 # tiny race condition between the python & singularity commands
@@ -29,10 +26,10 @@ NODEIP=$(hostname -I | grep -Eo '192\.168\.42\.[0-9]+')
 
 cat 1>&2 <<END
 
-ATTENTION: Jupyter only provides unencrypted HTTP access.
+ATTENTION: Posit Jupyter only provides unencrypted HTTP access.
 
 1. Run from local computer: ssh -N -L 8788:${NODEIP}:${PORT} -J ${APPTAINERENV_USER}@raven.mpcdf.mpg.de ${APPTAINERENV_USER}@hpc.bioinformatics.studio
-   and point your web browser to http://127.0.0.1:8788/lab?token=${APPTAINERENV_LABTOKEN}
+   and point your web browser to http://127.0.0.1:8788/lab?token=${JUPYTER_LABTOKEN}
 
 When done using Jupyter Lab, terminate the job by:
 
@@ -53,10 +50,10 @@ cat 1>&2 <<END
 END
 fi
 
-singularity exec --cleanenv ${JUPYTERLAB_IMAGE} \
+singularity exec --cleanenv ${POSIT_JUPYTER_IMAGE} \
     jupyter lab --no-browser \
         --ip=0.0.0.0 \
-        --NotebookApp.token=${APPTAINERENV_LABTOKEN} \
+        --NotebookApp.token=${JUPYTER_LABTOKEN} \
         --port=${PORT} >/dev/null 2>&1
 
-printf 'jupyter lab exited' 1>&2
+printf 'rserver exited' 1>&2
