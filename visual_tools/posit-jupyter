@@ -11,9 +11,96 @@ POSIT_JUPYTER_IMAGE="/nexus/posix0/MAGE-flaski/service/images/posit-latest.sif"
 # where writable file systems are necessary. Adjust path as appropriate for your computing environment.
 workdir=$(eval echo ~/.posit-jupyter-age)
 mkdir -p $workdir
-mkdir -p -m 700 $workdir/tmp $workdir/run
+mkdir -p -m 700 $workdir/tmp $workdir/run $workdir/config $workdir/ssl
 
-export APPTAINER_BIND="${workdir}/run:/run,${workdir}/tmp:/tmp"
+HPC_HOME=/nexus/posix0/MAGE-flaski/service/hpc/home/${USER}
+POSIT_HOME=/nexus/posix0/MAGE-flaski/service/posit/home/${USER}
+ACTIVE_HOME=$([ -w "$POSIT_HOME" ] && echo "$POSIT_HOME" || echo "$HPC_HOME")
+
+# Generate self assigned ssl keys for secure https connection
+if ! openssl x509 -in "$workdir/ssl/posit-jupyter.crt" -noout -enddate 2>/dev/null | grep -q "notAfter"; then
+    rm $workdir/ssl/* 2>/dev/null
+    openssl req -x509 -out $workdir/ssl/posit-jupyter.crt -keyout $workdir/ssl/posit-jupyter.key \
+        -newkey rsa:2048 -nodes -days 365 -sha256 \
+        -subj '/CN=localhost' 2>/dev/null
+fi
+
+# Write config files for notebookjob 
+cat > ${workdir}/config/jupyter_notebook_config.py <<END
+import os
+import platform
+
+PYTHON_VERSION=platform.python_version()
+PYTHON_VERSION_MED=PYTHON_VERSION.rsplit('.', 1)[0]
+
+PATH=os.environ["PATH"]
+USER=os.environ["USER"]
+HOME=f"${ACTIVE_HOME}"
+
+os.environ["HOME"]=HOME
+
+JUPYTERLAB_SETTINGS_DIR=f"{HOME}/.jupyter/lab/user-settings/"
+if not os.path.isdir(JUPYTERLAB_SETTINGS_DIR):
+  os.makedirs(JUPYTERLAB_SETTINGS_DIR)
+os.environ["JUPYTERLAB_SETTINGS_DIR"]=JUPYTERLAB_SETTINGS_DIR
+
+JUPYTERLAB_WORKSPACES_DIR=f"{HOME}/.jupyter/lab/workspaces/"
+if not os.path.isdir(JUPYTERLAB_WORKSPACES_DIR):
+  os.makedirs(JUPYTERLAB_WORKSPACES_DIR)
+os.environ["JUPYTERLAB_WORKSPACES_DIR"]=JUPYTERLAB_WORKSPACES_DIR
+
+os.environ["R_LIBS_USER"]=os.environ["HOME"]+"/R/x86_64-pc-linux-gnu-library/%V"
+
+Rversions=os.listdir("/opt/R")
+for r in Rversions:
+    if not os.path.isdir(os.environ["HOME"]+f"/R/x86_64-pc-linux-gnu-library/{r}") :
+        os.makedirs( os.environ["HOME"]+f"/R/x86_64-pc-linux-gnu-library/{r}" )
+
+os.environ["JUPYTER_RUNTIME_DIR"]=os.environ["HOME"]+"/.jupyter/run"
+os.environ["JUPYTER_DATA_DIR"]=os.environ["HOME"]+"/.jupyter/data"
+
+c.NotebookApp.notebook_dir=HOME
+c.ServerApp.preferred_dir=HOME
+c.NotebookApp.terminado_settings = { "shell_command": ["bash"] }
+c.ServerApp.terminado_settings = { "shell_command": ["bash"] }
+c.ServerApp.contents_manager_class = "jupytext.TextFileContentsManager"
+c.ContentsManager.default_jupytext_formats = "ipynb,py"
+c.ContentsManager.preferred_jupytext_formats_save = "py:light"
+c.ContentsManager.default_cell_markers = "{{{,}}}"
+END
+
+cat > ${workdir}/config/ipython_kernel_config.py <<END
+import os
+import platform
+
+PYTHON_VERSION=platform.python_version()
+PYTHON_VERSION_MED=PYTHON_VERSION.rsplit('.', 1)[0]
+
+USER=os.environ["USER"]
+PATH=os.environ["PATH"]
+
+HOME=f"${ACTIVE_HOME}"
+
+PYTHONUSERBASE=f"{HOME}/.jupyter/python/{PYTHON_VERSION_MED}"
+if not os.path.isdir(PYTHONUSERBASE):
+    os.makedirs(PYTHONUSERBASE)
+os.environ["PYTHONUSERBASE"]=PYTHONUSERBASE
+
+os.environ["PATH"]=f"/opt/python/{PYTHON_VERSION}/bin:{HOME}/.jupyter/python/{PYTHON_VERSION_MED}/bin:{PATH}"
+os.environ["HOME"]=HOME
+os.environ["R_LIBS_USER"]=os.environ["HOME"]+"/R/x86_64-pc-linux-gnu-library/%V"
+
+Rversions=os.listdir("/opt/R")
+for r in Rversions:
+    if not os.path.isdir(os.environ["HOME"]+f"/R/x86_64-pc-linux-gnu-library/{r}") :
+        os.makedirs( os.environ["HOME"]+f"/R/x86_64-pc-linux-gnu-library/{r}" )
+
+SYSPATH=f"{PYTHONUSERBASE}/lib/python{PYTHON_VERSION_MED}/site-packages/"
+c.InteractiveShellApp.exec_lines = [f'import sys; sys.path.append("{SYSPATH}")']
+END
+
+
+export APPTAINER_BIND="${workdir}/run:/run,${workdir}/tmp:/tmp,$workdir/config/jupyter_notebook_config.py:/opt/python/jupyter/etc/jupyter/jupyter_notebook_config.py,$workdir/config/ipython_kernel_config.py:/usr/local/etc/ipython/ipython_kernel_config.py"
 
 export APPTAINERENV_USER=$(id -un) 
 export JUPYTER_LABTOKEN=$(openssl rand -base64 15)
@@ -26,10 +113,12 @@ NODEIP=$(hostname -I | grep -Eo '192\.168\.42\.[0-9]+')
 
 cat 1>&2 <<END
 
-ATTENTION: Posit Jupyter only provides unencrypted HTTP access.
+ATTENTION: Posit Jupyter provides encrypted HTTPS access.
 
 1. Run from local computer: ssh -N -L 8788:${NODEIP}:${PORT} -J ${APPTAINERENV_USER}@raven.mpcdf.mpg.de ${APPTAINERENV_USER}@hpc.bioinformatics.studio
-   and point your web browser to http://127.0.0.1:8788/lab?token=${JUPYTER_LABTOKEN}
+   and point your web browser to https://127.0.0.1:8788/lab?token=${JUPYTER_LABTOKEN}
+
+   *** Please avoid the browser message of [not secure] and advance to open the page. The connection is encrypted and secured with ssl self-signed key. 
 
 When done using Jupyter Lab, terminate the job by:
 
@@ -53,6 +142,8 @@ fi
 singularity exec --cleanenv ${POSIT_JUPYTER_IMAGE} \
     jupyter lab --no-browser \
         --ip=0.0.0.0 \
+        --certfile=${workdir}/ssl/posit-jupyter.crt \
+        --keyfile=${workdir}/ssl/posit-jupyter.key \
         --NotebookApp.token=${JUPYTER_LABTOKEN} \
         --port=${PORT} >/dev/null 2>&1
 
