@@ -131,11 +131,11 @@ for f in $(ls *.fastq);
    do  rm ~/project/slurm_logs/${f}.*.out
 
    # wait if the running jobs exceed the limit
-   while [  `squeue –u username | wc –l` -gt "500" ];
+   while [  `squeue -u <username> | wc -l` -gt "500" ];
       do echo "sleeping"; sleep 300
    done
 
-   sbatch --cpus-per-task=18 --mem=15gb --time=5-24 \
+   sbatch --cpus-per-task=4 --mem=8gb --time=5-24 \
    -p cluster -o ~/project/slurm_logs/${f}.%j.out ~/project/tmp/${f}.sh << EOF
    #!/bin/bash
    # necessary operations
