@@ -225,6 +225,17 @@ Cancel a job
 scancel <job_id>
 ```
 
+### Monitoring Resource Usage by Job
+
+It is important to assign right amount of resources (e.g. number of CPUs:`--cpus-per-task`, memory:`--mem`) for a job.
+Over assignments of resources occupies unnecessary space or computational power and it may prevent running new jobs or lead to higher waiting times for other users.
+
+In order to have an idea about resource usage by a job, run `htop` command via a running job:
+```
+srun --jobid <job_id> --pty htop --user=$USER
+```
+From the outupt, `CPU%`, `MEM%` of the running processes/jobs would provide you an overall idea about the resource usage, which can be helpful for better assignment of resources. 
+
 --- 
 
 ## Singularity
@@ -433,6 +444,8 @@ scp <username>@<address>:</path/to/file> ~/path/to/file
 ## Remote Visualization Services
 
 For remote visualization services please consult MPCDF's [documentation](https://docs.mpcdf.mpg.de/doc/visualization/index.html) and previous training [slides](https://datashare.mpcdf.mpg.de/s/iYB7xA8FN4igkxW).
+
+In order run visual tools such as `posit-jupyter` on `hpc.bioinformatics.studio` via slurm job and access from your local browser, please look into [visual_tools](/visual_tools).
 
 ---
 

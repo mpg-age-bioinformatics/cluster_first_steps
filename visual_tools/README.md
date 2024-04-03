@@ -4,20 +4,22 @@ Run different tools from `hpc` using singularity containers and access these fro
 
 ### Step 1: Run Script
 Run the corresponding script as a slurm job from `hpc node`.
+
+Scripts are stored in path `/usr/share/vt/`
 ```
-sbatch [options] <script>
+sbatch [options] /usr/share/vt/<script>
 ```
-For example, to launch Rstudio Server job with default parameters:
+For example, to launch `posit-jupyter` with default parameters:
 ```
-sbatch posit-jupyter
+sbatch /usr/share/vt/posit-jupyter
 ```
 Can add different job parameters based on you requirements:
 ```
-sbatch --partition=<value> --cpus-per-task=<value> --mem=<value> --output=<value> posit-jupyter
+sbatch --partition=<value> --cpus-per-task=<value> --mem=<value> --output=<value> /usr/share/vt/posit-jupyter
 ```
 In order to use a different image:
 ```
-sbatch --export=ALL,IMAGE=<image_path> posit-jupyter
+sbatch --export=ALL,IMAGE=<image_path> /usr/share/vt/posit-jupyter
 ```
 
 ### Step 2: Get Instructions
@@ -44,10 +46,3 @@ It is recommended to use `posit-jupyter` script as it has more features in one p
 - Multiple versions of R
 - Multiple versions of Python
 - Option to create R, Python, text or Markdown files
-
-Get the script with:
-```
-curl -o posit-jupyter https://raw.githubusercontent.com/mpg-age-bioinformatics/cluster_first_steps/master/visual_tools/posit-jupyter
-```
-
-And follow the `3 Steps` stated above.
