@@ -5,8 +5,12 @@
 #SBATCH --mem=8192
 #SBATCH --output=vscode.job.%j
 
+# Set image 
 # docker image from: https://hub.docker.com/_/microsoft-vscode-devcontainers
 VSCODE_IMAGE="/nexus/posix0/MAGE-flaski/service/images/vscode_ubuntu.sif"
+
+# In order to use a different image provided with 'sbatch --export=ALL,IMAGE=<image_path>'
+[ -n "$IMAGE" ] && VSCODE_IMAGE="$IMAGE"
 
 # Create temporary directory to be populated with directories to bind-mount in the container
 # where writable file systems are necessary. Adjust path as appropriate for your computing environment.

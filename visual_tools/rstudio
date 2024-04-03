@@ -8,6 +8,10 @@
 RSTUDIO_IMAGE="/nexus/posix0/MAGE-flaski/service/images/rstudio_4.2.sif"
 RSTUDIO_VERSION="4.2"
 
+# In order to use a different image/r version provided with 'sbatch --export=ALL,IMAGE=<image_path>,R_VER=<r_version>'
+[ -n "$IMAGE" ] && RSTUDIO_IMAGE="$IMAGE"
+[ -n "$R_VER" ] && RSTUDIO_VERSION="$R_VER"
+
 # Create temporary directory to be populated with directories to bind-mount in the container
 # where writable file systems are necessary. Adjust path as appropriate for your computing environment.
 mkdir -p ~/.rstudio-age/tmp

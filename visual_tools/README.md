@@ -15,6 +15,10 @@ Can add different job parameters based on you requirements:
 ```
 sbatch --partition=<value> --cpus-per-task=<value> --mem=<value> --output=<value> posit-jupyter
 ```
+In order to use a different image:
+```
+sbatch --export=ALL,IMAGE=<image_path> posit-jupyter
+```
 
 ### Step 2: Get Instructions
 From the job output, get the instructions:
