@@ -23,7 +23,7 @@ sbatch --export=ALL,IMAGE=<image_path> /usr/share/vt/posit-jupyter
 ```
 
 ### Step 2: Get Instructions
-From the job standard output file (default: `<posit-jupyter/rstudio>.job.<jobid>` ), get the instructions:
+From the job standard output file (default: `<scipt_name>.job.<jobid>` ), get the instructions:
 ```
 cat <job_output_file>
 ```
@@ -38,6 +38,18 @@ Just follow the fetched instructions to launch the required tool. Followings are
 - Do SSH port forwarding from your local computer to and `hpc` access node: open a local terminal and run the provided command (keep open)
 - Access the tool from browser with the provided URL (also with credentials if necessary)
 - When done using, exit the port forwarding and cancel the job with `scancel -f <job_id>`
+
+## Available Scripts
+
+The scripts offer the following interfaces:
+
+**posit-jupyter**: Jupyter Lab from Posit
+
+**jupyternb**: Jupyter Notebook from Posit
+
+**vscode**: Visual Studio Code
+
+**rstudio**: Rstudio from the Rocker Project
 
 ## posit-jupyter
 It is recommended to use the `posit-jupyter` script as it has more features in one place with the following properties:
