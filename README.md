@@ -445,7 +445,7 @@ scp <username>@<address>:</path/to/file> ~/path/to/file
 
 For remote visualization services please consult MPCDF's [documentation](https://docs.mpcdf.mpg.de/doc/visualization/index.html) and previous training [slides](https://datashare.mpcdf.mpg.de/s/iYB7xA8FN4igkxW).
 
-In order run visual tools such as `posit-jupyter` on `hpc.bioinformatics.studio` via slurm job and access from your local browser, please look into [visual_tools](/visual_tools).
+In order run visual tools such as `posit/rstudio` or `jupyterlab` on `hpc.bioinformatics.studio` via a slurm job and access it from your local browser, please look into [visual_tools](/visual_tools).
 
 ---
 
