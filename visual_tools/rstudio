@@ -12,6 +12,15 @@ RSTUDIO_VERSION="4.2"
 [ -n "$IMAGE" ] && RSTUDIO_IMAGE="$IMAGE"
 [ -n "$R_VER" ] && RSTUDIO_VERSION="$R_VER"
 
+# In order to use a different image provided with '<script> -i <image_path>'
+while getopts "i:v:" opt; do
+    case $opt in
+        i) RSTUDIO_IMAGE="$OPTARG" ;;
+        v) RSTUDIO_VERSION="$OPTARG" ;;
+        *) exit 1 ;;
+    esac
+done
+
 # Create temporary directory to be populated with directories to bind-mount in the container
 # where writable file systems are necessary. Adjust path as appropriate for your computing environment.
 mkdir -p ~/.rstudio-age/tmp

@@ -19,6 +19,8 @@ sbatch --partition=<value> --cpus-per-task=<value> --mem=<value> --output=<value
 ```
 In order to use a different image:
 ```
+sbatch /usr/share/vt/posit-jupyter -i <image_path>
+# or
 sbatch --export=ALL,IMAGE=<image_path> /usr/share/vt/posit-jupyter
 ```
 

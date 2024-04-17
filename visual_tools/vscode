@@ -12,6 +12,14 @@ VSCODE_IMAGE="/nexus/posix0/MAGE-flaski/service/images/vscode_ubuntu.sif"
 # In order to use a different image provided with 'sbatch --export=ALL,IMAGE=<image_path>'
 [ -n "$IMAGE" ] && VSCODE_IMAGE="$IMAGE"
 
+# In order to use a different image provided with '<script> -i <image_path>'
+while getopts "i:" opt; do
+    case $opt in
+        i) VSCODE_IMAGE="$OPTARG" ;;
+        *) exit 1 ;;
+    esac
+done
+
 # Create temporary directory to be populated with directories to bind-mount in the container
 # where writable file systems are necessary. Adjust path as appropriate for your computing environment.
 workdir=$(eval echo ~/.vscode-age)

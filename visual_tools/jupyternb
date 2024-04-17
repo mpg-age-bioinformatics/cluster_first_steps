@@ -11,6 +11,14 @@ POSIT_JUPYTER_IMAGE="/nexus/posix0/MAGE-flaski/service/images/posit-latest.sif"
 # In order to use a different image provided with 'sbatch --export=ALL,IMAGE=<image_path>'
 [ -n "$IMAGE" ] && POSIT_JUPYTER_IMAGE="$IMAGE"
 
+# In order to use a different image provided with '<script> -i <image_path>'
+while getopts "i:" opt; do
+    case $opt in
+        i) POSIT_JUPYTER_IMAGE="$OPTARG" ;;
+        *) exit 1 ;;
+    esac
+done
+
 # Create directory to be populated with directories to bind-mount in the container
 # where writable file systems are necessary. Adjust path as appropriate for your computing environment.
 workdir=$(eval echo ~/.jupyternb-age)
