@@ -236,7 +236,17 @@ srun --jobid <job_id> --pty htop --user=$USER
 ```
 From the outupt, `CPU%`, `MEM%` of the running processes/jobs would provide you an overall idea about the resource usage, which can be helpful for better assignment of resources. 
 
---- 
+Also, can get simple but useful job stats using `reportseff` command:
+```
+reportseff <job_id>
+```
+
+In order to get all the recent job stats run by your user:
+```
+reportseff -u $USER
+```
+
+---  
 
 ## Singularity
 
