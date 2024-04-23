@@ -457,6 +457,8 @@ For remote visualization services please consult MPCDF's [documentation](https:/
 
 In order run visual tools such as `posit/rstudio` or `jupyterlab` on `hpc.bioinformatics.studio` via a slurm job and access it from your local browser, please look into [visual_tools](/visual_tools).
 
+Also, it is possible to run rstudio in your local device using your preferred [rocker rstudio images](https://rocker-project.org/images/).
+
 ---
 
 ## Support
