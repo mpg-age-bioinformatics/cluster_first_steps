@@ -234,9 +234,9 @@ In order to have an idea about resource usage by a job, run `htop` command via a
 ```
 srun --jobid <job_id> --pty htop --user=$USER
 ```
-From the outupt, `CPU%`, `MEM%` of the running processes/jobs would provide you an overall idea about the resource usage, which can be helpful for better assignment of resources. 
+From the outupt, `CPU%`, `MEM%` of the running processes/jobs will provide you an overall idea about the resource usage, which can be helpful for better assignment of resources. 
 
-Also, can get simple but useful job stats using `reportseff` command:
+Also, you can get simple but useful job stats using `reportseff` command:
 ```
 reportseff <job_id>
 ```
