@@ -10,13 +10,15 @@
 
 [Data](#data)
 
+[Posit Bioinformatics](#posit-bioinformatics)
+
 [Remote Visualization Services](#remote-visualization-services)
 
 [Support](#support)
 
 ## Getting Started
 
-In order to access the cluster, you will needs to have a user account at the Max Planck Computing and Data Facility - [MPCDF Registration](https://selfservice.mpcdf.mpg.de/index.php?r=registration). If you already have an MPCDF account and would like to access our HPC please mail us at bioinformatics@age.mpg.de.  
+In order to access the cluster, you will need to have a user account at the Max Planck Computing and Data Facility - [MPCDF Registration](https://selfservice.mpcdf.mpg.de/index.php?r=registration). If you already have an MPCDF account and would like to access our HPC please mail us at bioinformatics@age.mpg.de.  
 
 **Login to MPCDF Access Nodes**
 
@@ -451,11 +453,69 @@ scp <username>@<address>:</path/to/file> ~/path/to/file
 
 ---
 
+## Posit Bioinformatics
+
+Posit is a data science developer platform that provides access to multiple development environment including Rstudio, Jupyter Notebook, JupyterLab and VS Code. With Posit Bioinformatics, you can run multiple-concurrent sessions as well as use different versions of R and Python.  
+
+It is available at [https://docker.bioinformatics.studio/posit](https://docker.bioinformatics.studio/posit) and can be accessed through the institute networks (e.g. internal wifi, lan, vpn, MPCDF gateways). In order to access the service, you need to have a user account at the Max Planck Computing and Data Facility - [MPCDF Registration](https://selfservice.mpcdf.mpg.de/index.php?r=registration). If you already have an MPCDF account and would like to use Posit Bioinformatics, please mail us at bioinformatics@age.mpg.de.
+### Login & Home
+
+Login to the platform is possible with your MPCDF user credentials.
+
+Your home directory would be in `/nexus/posix0/MAGE-flaski/service/posit/<user>`. However, when starting a new VS Code or Jupyter session terminal, you may find the current location as the primary home of `/home/<user>`. A simple `cd` command would take you to the home directory in nexus space.
+
+Additionally, `hpc.bioinformatics.studio` home or group directory can also be accessed from the platform. To learn more about managing data, please look into the [Data](#data) section.
+
+### Installing Python Packages as User
+
+From the command line (eg. JupyterLab terminal or VScode terminal):
+```
+$ source /python.rc 
+
+Available python versions:
+
+3.10.8  3.11.0  3.8.10  3.9.5  jupyter
+
+use 'source /python.rc <version>' to load the respective environment.
+
+$ source /python.rc 3.10.8
+$ pip3 install pandas --user
+$ pip3 show pandas
+Name: pandas
+Version: 1.5.1
+Summary: Powerful data structures for data analysis, time series, and statistics
+Home-page: https://pandas.pydata.org
+Author: The Pandas Development Team
+Author-email: pandas-dev@python.org
+License: BSD-3-Clause
+Location: /nexus/posix0/MAGE-flaski/service/posit/home/jboucas/.jupyter/python/3.10/lib/python3.10/site-packages
+Requires: numpy, python-dateutil, pytz
+Required-by: AGEpy, formulaic, lifelines, seaborn, statsmodels
+```
+
+### R update.packages and versions
+
+Users should run `update.packages()` upon first R login.
+
+To change R version and set appropriate env variables from terminal, `/r.rc` can be used.
+
+Check the available R versions
+```
+source /r.rc
+```
+
+Set R version
+```
+source /r.rc <version>
+```
+
+---
+
 ## Remote Visualization Services
 
-For remote visualization services please consult MPCDF's [documentation](https://docs.mpcdf.mpg.de/doc/visualization/index.html) and previous training [slides](https://datashare.mpcdf.mpg.de/s/iYB7xA8FN4igkxW).
+For further remote visualization services please consult MPCDF's [documentation](https://docs.mpcdf.mpg.de/doc/visualization/index.html) and previous training [slides](https://datashare.mpcdf.mpg.de/s/iYB7xA8FN4igkxW).
 
-In order run visual tools such as `posit/rstudio` or `jupyterlab` on `hpc.bioinformatics.studio` via a slurm job and access it from your local browser, please look into [visual_tools](/visual_tools).
+In order run visual tools such as `posit/rstudio` or `jupyterlab` on `hpc.bioinformatics.studio` (possibly with custom parameters/resources) via a slurm job and access it from your local browser, please look into [visual_tools](/visual_tools).
 
 Also, it is possible to run rstudio in your local device using your preferred [rocker rstudio images](https://rocker-project.org/images/).
 
