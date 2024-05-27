@@ -10,7 +10,7 @@
 
 [Data](#data)
 
-[Posit Bioinformatics](#posit-bioinformatics)
+[Posit Bioinformatics Studio](#posit-bioinformatics-studio)
 
 [Remote Visualization Services](#remote-visualization-services)
 
@@ -453,11 +453,11 @@ scp <username>@<address>:</path/to/file> ~/path/to/file
 
 ---
 
-## Posit Bioinformatics
+## Posit Bioinformatics Studio
 
-Posit is a data science developer platform that provides access to multiple development environment including Rstudio, Jupyter Notebook, JupyterLab and VS Code. With Posit Bioinformatics, you can run multiple-concurrent sessions as well as use different versions of R and Python.  
+Posit is a data science developer platform that provides access to multiple development environment including Rstudio, Jupyter Notebook, JupyterLab and VS Code. With Posit Bioinformatics Studio, you can run multiple-concurrent sessions as well as use different versions of R and Python.  
 
-It is available at [https://docker.bioinformatics.studio/posit](https://docker.bioinformatics.studio/posit) and can be accessed through the institute networks (e.g. internal wifi, lan, vpn, MPCDF gateways). In order to access the service, you need to have a user account at the Max Planck Computing and Data Facility - [MPCDF Registration](https://selfservice.mpcdf.mpg.de/index.php?r=registration). If you already have an MPCDF account and would like to use Posit Bioinformatics, please mail us at bioinformatics@age.mpg.de.
+It is available at [https://docker.bioinformatics.studio/posit](https://docker.bioinformatics.studio/posit) and can be accessed through the institute networks (e.g. internal wifi, lan, vpn, MPCDF gateways). In order to access the service, you need to have a user account at the Max Planck Computing and Data Facility - [MPCDF Registration](https://selfservice.mpcdf.mpg.de/index.php?r=registration). If you already have an MPCDF account and would like to use Posit Bioinformatics Studio, please mail us at bioinformatics@age.mpg.de.
 ### Login & Home
 
 Login to the platform is possible with your MPCDF user credentials.
