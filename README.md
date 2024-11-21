@@ -20,30 +20,28 @@
 
 In order to access the cluster, you will need to have a user account at the Max Planck Computing and Data Facility - [MPCDF Registration](https://selfservice.mpcdf.mpg.de/index.php?r=registration). If you already have an MPCDF account and would like to access our HPC please mail us at bioinformatics@age.mpg.de.  
 
-**Login to MPCDF Access Nodes**
+**Login to the HPC User Node**
 
-For security reasons, direct login to the HPC system is allowed only from within the MPCDF network. Users from other locations have to login to one of the gateway systems first.
+For security reasons, direct login to the HPC system is allowed only from within the MPG network.
 
-From everywhere:
-
-```bash
-ssh <username>@gate.mpcdf.mpg.de
-```
 
 From the MPG network (when over at the institute or over VPN):
 
 ```bash
-ssh <username>@raven.mpcdf.mpg.de
+ssh <username>@hpc.bioinformatics.studio
 ```
 
 Where `<username>` is your MPCDF login.
 
-Once you have accessed one this systems you can access our HPC:
-
+Outside the MPG network:
 ```bash
-ssh hpc.bioinformatics.studio
+ssh <username>@gate.mpcdf.mpg.de
 ```
 
+then,
+```bash
+ssh <username>@hpc.bioinformatics.studio
+```
 --- 
 
 ## SLURM, Simple Linux Utility for Resource Management 
