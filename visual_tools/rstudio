@@ -73,7 +73,7 @@ cat 1>&2 <<END
 
 ATTENTION: RStudio Server Community Edition only provides unencrypted HTTP access.
 
-1. Run from local computer: ssh -N -L 8787:${NODEIP}:${PORT} -J ${APPTAINERENV_USER}@raven.mpcdf.mpg.de ${APPTAINERENV_USER}@hpc.bioinformatics.studio
+1. Run from local computer: ssh -N -L 8787:${NODEIP}:${PORT} ${APPTAINERENV_USER}@hpc.bioinformatics.studio
    and point your web browser to http://localhost:8787
 
 2. log in to RStudio Server using the following credentials:
