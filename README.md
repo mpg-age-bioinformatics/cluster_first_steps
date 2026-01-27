@@ -449,6 +449,22 @@ scp </path/to/file> <username>@<address>:~/path/to/file
 scp <username>@<address>:</path/to/file> ~/path/to/file
 ```
 
+**Network throughput note (downloads to institute)**
+
+It has been observed/reported that downloads from `hpc.bioinformatics.studio` (including `posit`) to devices within our institute network can be slower than expected (uploads are typically fine), possibly due to network policies or routing/peering behavior.
+
+**Workaround (recommended for larger transfers):**
+
+If you need to transfer data from `/nexus` storage (including your home on `hpc.bioinformatics.studio` or `posit`) to your local machine, it would be faster/more efficient to transfer via MPCDF’s `raven` as an intermediate host, e.g.:
+
+```bash
+# Example: copy to your local machine
+scp -r $USER@raven.mpcdf.mpg.de:/path/to/file  ~/path/to/your/device
+
+# or with rsync (often better for large files / resumes)
+rsync -rtvh $USER@raven.mpcdf.mpg.de:/path/to/file  ~/path/to/your/device
+```
+
 ---
 
 ## Posit Bioinformatics Studio
