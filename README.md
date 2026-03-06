@@ -472,6 +472,7 @@ rsync -rtvh $USER@raven.mpcdf.mpg.de:/path/to/file  ~/path/to/your/device
 Posit is a data science developer platform that provides access to multiple development environment including Rstudio, Jupyter Notebook, JupyterLab and VS Code. With Posit Bioinformatics Studio, you can run multiple-concurrent sessions as well as use different versions of R and Python.  
 
 It is available at [https://docker.bioinformatics.studio/posit](https://docker.bioinformatics.studio/posit) and can be accessed through the institute networks (e.g. internal wifi, lan, vpn, MPCDF gateways). In order to access the service, you need to have a user account at the Max Planck Computing and Data Facility - [MPCDF Registration](https://selfservice.mpcdf.mpg.de/index.php?r=registration). If you already have an MPCDF account and would like to use Posit Bioinformatics Studio, please mail us at bioinformatics@age.mpg.de.
+
 ### Login & Home
 
 Login to the platform is possible with your MPCDF user credentials.
@@ -480,9 +481,13 @@ Your home directory would be in `/nexus/posix0/MAGE-flaski/service/posit/<user>`
 
 Additionally, `hpc.bioinformatics.studio` home or group directory can also be accessed from the platform. To learn more about managing data, please look into the [Data](#data) section.
 
+### Posit Version
+
+Posit image version of the running instance can be checked with variable `POSIT_IMAGE` (e.g. `echo $POSIT_IMAGE`).
+
 ### Installing Python Packages as User
 
-From the command line (eg. JupyterLab terminal or VScode terminal):
+From the command line (e.g. JupyterLab terminal or VScode terminal):
 ```
 $ source /python.rc 
 
