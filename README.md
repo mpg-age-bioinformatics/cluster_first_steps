@@ -485,6 +485,20 @@ Additionally, `hpc.bioinformatics.studio` home or group directory can also be ac
 
 Posit image version of the running instance can be checked with variable `POSIT_IMAGE` (e.g. `echo $POSIT_IMAGE`). You can easily use this on your notebooks and Rmd documents to keep track of your environment eg.: `! echo $POSIT_IMAGE` in a jupyter notebook or `Sys.getenv('POSIT_IMAGE')` in R.
 
+**Listing of Packages**
+
+To list the currently installed Python packages reliably in a notebook:
+```python
+import sys; !{sys.executable} -m pip list
+```
+It can also be done with `!python -m pip list`.
+
+To list all installed R packages:
+```r
+installed.packages()[, c("Package", "Version")]
+```
+Or use `sessionInfo()`, to list R packages currently loaded in the session.
+
 ### Installing Python Packages as User
 
 From the command line (e.g. JupyterLab terminal or VScode terminal):
