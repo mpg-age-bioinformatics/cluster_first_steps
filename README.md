@@ -483,7 +483,7 @@ Additionally, `hpc.bioinformatics.studio` home or group directory can also be ac
 
 ### Posit Version
 
-Posit image version of the running instance can be checked with variable `POSIT_IMAGE` (e.g. `echo $POSIT_IMAGE`).
+Posit image version of the running instance can be checked with variable `POSIT_IMAGE` (e.g. `echo $POSIT_IMAGE`). You can easily use this on your notebooks and Rmd documents to keep track of your environment eg.: `! echo $POSIT_IMAGE` in a jupyter notebook or `Sys.getenv('POSIT_IMAGE')` in R.
 
 ### Installing Python Packages as User
 
