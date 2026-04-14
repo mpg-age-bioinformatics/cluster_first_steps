@@ -491,7 +491,11 @@ To list the currently installed Python packages reliably in a notebook:
 ```python
 import sys; !{sys.executable} -m pip list
 ```
-It can also be done with `!python -m pip list`.
+
+Or simply use existing `/python-env.rc` script to get the active environment details in notebook:
+```python
+! /python-env.rc
+```
 
 To list all installed R packages:
 ```r
