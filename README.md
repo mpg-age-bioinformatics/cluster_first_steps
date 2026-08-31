@@ -481,6 +481,10 @@ Your home directory would be in `/nexus/posix0/MAGE-flaski/service/posit/<user>`
 
 Additionally, `hpc.bioinformatics.studio` home or group directory can also be accessed from the platform. To learn more about managing data, please look into the [Data](#data) section.
 
+### MAGE-LLM
+
+To use the internally hosted MAGE-LLM models in Posit JupyterLab or Visual Studio Code, see the [MAGE-LLM user guides](llm/README.md).
+
 ### Posit Version
 
 Posit image version of the running instance can be checked with variable `POSIT_IMAGE` (e.g. `echo $POSIT_IMAGE`). You can easily use this on your notebooks and Rmd documents to keep track of your environment eg.: `! echo $POSIT_IMAGE` in a jupyter notebook or `Sys.getenv('POSIT_IMAGE')` in R.
