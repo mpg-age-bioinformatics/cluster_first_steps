@@ -15,9 +15,9 @@ API keys are personal credentials. Do not share your key with other users or sav
 - [Example use of MAGE-LLM key with Python](api-key-python.md)
 
 > [!CAUTION]
-> LLM output can be hallucinated, incomplete, or flawed. Review and validate generated code, commands, conclusions, and suggested analyses before using or executing them.
+> MAGE-LLM is accessible only from the institute network and is currently experimental. The available open-weight models are hosted internally within the MPCDF network and run on a small cluster. Responses may be slow or temporarily unavailable during concurrent use. As with any other LLM, outputs may be inaccurate or incomplete. Always review generated code, commands, analyses, and conclusions.
 >
-> The available open-weight LLMs are hosted internally within the MPCDF network and run on limited, shared GPU resources. They may not be as capable as larger commercial models, and responses can become slower, time out, or fail when many users access the service at the same time. If this happens, wait briefly and try again.
+> Users are responsible for ensuring that submitted prompts, files, and data comply with applicable institutional, project, and data-protection policies, and for assessing the permissions, telemetry, and data-handling practices of any third-party plugins they use.
 
 ## Feedback
 
