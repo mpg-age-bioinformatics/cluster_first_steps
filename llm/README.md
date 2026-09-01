@@ -12,6 +12,7 @@ API keys are personal credentials. Do not share your key with other users or sav
 
 - [Posit JupyterLab with Notebook Intelligence](notebook-nbi.md)
 - [Posit Visual Studio Code with Continue](vscode-continue.md)
+- [Example use of MAGE-LLM key with Python](api-key-python.md)
 
 > [!CAUTION]
 > LLM output can be hallucinated, incomplete, or flawed. Review and validate generated code, commands, conclusions, and suggested analyses before using or executing them.
