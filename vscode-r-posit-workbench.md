@@ -50,12 +50,6 @@ To set the R version only for the current project/folder, create this file insid
 .vscode/settings.json
 ```
 
-For example, in this folder the path would be:
-
-```text
-./.vscode/settings.json
-```
-
 Put only the project-specific R version there:
 
 ```json
