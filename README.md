@@ -550,6 +550,11 @@ Set R version
 source /r.rc <version>
 ```
 
+### Using VS Code for interactive R work
+
+Please follow the instructions under [VS Code R Setup In Posit Workbench](vscode-r-posit-workbench.md)
+
+
 ---
 
 ## Remote Visualization Services
