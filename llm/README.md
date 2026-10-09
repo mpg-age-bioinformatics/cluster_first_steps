@@ -4,7 +4,7 @@ The MAGE-LLM service provides internally hosted open-weight models for supported
 
 ## Request a MAGE-LLM key
 
-Users need to request a personal API key for the MAGE-LLM service. Contact [bioinformatics@age.mpg.de](mailto:bioinformatics@age.mpg.de) to get access.
+Users need to request a personal API key for the MAGE-LLM service through [https://flaski.age.mpg.de/llms](https://flaski.age.mpg.de/llms).
 
 API keys are personal credentials. Do not share your key with other users or save it in notebooks, scripts, Git repositories, or screenshots.
 
